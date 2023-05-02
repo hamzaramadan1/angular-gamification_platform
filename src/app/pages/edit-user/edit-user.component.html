@@ -1,0 +1,139 @@
+<app-navbar></app-navbar>
+<body>
+<div class="left">
+  <h1>Profile</h1>
+  <p *ngIf="currentUser.role === 'USER'" class="user-level"><span>Lv. {{currentUser.userLevel}}</span></p>
+  <img class="profilePic" *ngIf="currentUser.userImageName !== null" src="assets/user_images/{{currentUser.userImageName}}" style="border: 5px solid white;">
+  <img class="profilePic" *ngIf="currentUser.userImageName == null" src="https://i.stack.imgur.com/34AD2.jpg" alt="User profile image" style="border: 5px solid white;">
+  <p class="user-name" style="text-transform: capitalize">{{currentUser.firstName}} {{currentUser.lastName}}</p>
+  <p class="user-grade">Débutant</p>
+  <form #fl="ngForm" (ngSubmit)="fl.form.valid && updateProfilePic()">
+    <div class="form-group">
+      <label id="userImageFileLabel" for="userImageFile"><img src="assets/photo.png" style="height: 30px; width: auto">&nbsp; Télécharger une nouvelle image</label>
+      <div class="position-relative">
+        <input
+          type="file"
+          id="userImageFile"
+          name="userImageFile"
+          accept="image/png, image/jpg, image/gif, image/jpeg"
+          (change)="onFileSelected($event)"
+          class="inputfile"
+          required
+        >
+      </div>
+    </div>
+    <button id="submit" type="submit" [disabled]="!fl.form.valid">Changer</button>
+  </form>
+</div>
+<div class="right">
+  <h1>General</h1>
+  <form #fr="ngForm" (ngSubmit)="fr.form.valid && updateUser()">
+    <div class="error-message" *ngIf="errorMessage">
+      {{errorMessage}}
+    </div>
+    <div class="form-group" style="display: inline-block; width: 40%;">
+      <div>
+        <label for="first-name">Prénom</label>
+        <input
+          style="text-transform: capitalize"
+          type="text"
+          id="first-name"
+          name="first-name"
+          placeholder="{{currentUser.firstName}}"
+          [(ngModel)]="user.firstName"
+          #firstname="ngModel"
+          [pattern]=firstNamePattern
+        >
+      </div>
+      <div *ngIf="firstname.dirty">
+        <div class="error-message" *ngIf="firstname.errors?.['pattern']">
+          Format de prénom invalide.
+        </div>
+      </div>
+    </div>
+    <div style="display: inline-block; width: 15%"></div>
+    <div class="form-group" style="display: inline-block; width: 40%;">
+      <div>
+        <label for="last-name">Nom</label>
+        <input style="text-transform: capitalize"
+               type="text"
+               id="last-name"
+               name="last-name"
+               placeholder="{{currentUser.lastName}}"
+               [(ngModel)]="user.lastName"
+               #lastname="ngModel"
+               [pattern]=lastNamePattern>
+      </div>
+      <div *ngIf="lastname.dirty">
+        <div class="error-message" *ngIf="lastname.errors?.['pattern']">
+          Format de nom invalide.
+        </div>
+      </div>
+    </div>
+    <div class="separator"></div>
+  <h1>Security</h1>
+    <div class="form-group" style="display: inline-block; width: 40%;">
+      <div>
+        <label for="old-password">Mot de passe actuel</label>
+        <input
+          type="password"
+          id="old-password"
+          name="old-password"
+          [(ngModel)]="currentPassword"
+          required
+        >
+      </div>
+    </div>
+    <div style="display: inline-block; width: 15%"></div>
+    <div class="form-group" style="display: inline-block; width: 40%;">
+      <div>
+        <label for="password">Nouveau mot de passe</label>
+        <input type="password"
+               id="password"
+               name="password"
+               [(ngModel)]="user.password"
+               #password="ngModel"
+        >
+      </div>
+    </div>
+    <div class="form-group" style="display: inline-block; width: 40%;">
+      <div>
+        <label for="confirm-password">Confirmation du nouveau mot de passe</label>
+        <input type="password"
+               id="confirm-password"
+               name="confirm-password"
+               [required]="fr.form.get('password')?.value !== ''"
+               [(ngModel)]="user.confirmPassword"
+               #confirmPassword="ngModel"
+        >
+      </div>
+      <div *ngIf="confirmPassword.dirty">
+        <div class="error-message" *ngIf="confirmPassword.value !== password.value">
+          Les mots de passes ne sont pas identiques.
+        </div>
+      </div>
+    </div>
+
+    <div class="separator"></div>
+    <div class="form-group" style="width: 40%;">
+      <div>
+        <label for="email">Adresse Email</label>
+        <input type="text"
+               id="email"
+               name="email"
+               placeholder="{{currentUser.email}}"
+               [(ngModel)]="user.email"
+               #email = "ngModel"
+               [pattern]="emailPattern"
+        >
+      </div>
+      <div  *ngIf="!email.valid && (email.dirty || email.touched)">
+        <div class="error-message" *ngIf="email.errors?.['pattern']">
+          Format d'email invalide.
+        </div>
+      </div>
+    </div>
+    <button type="submit" [disabled]="!fr.form.valid">Sauvegarder</button>
+  </form>
+</div>
+</body>

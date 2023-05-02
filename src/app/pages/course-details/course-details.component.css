@@ -1,0 +1,20 @@
+.right-container {
+  padding: 8vh;
+  width: 40%;
+  margin: 5vh auto;
+  text-align: center;
+  background-color: #F7F7F7;
+  border-radius: 15px;
+  box-shadow: 0px 0px 25px 5px rgba(201, 201, 201, 0.5);
+}
+
+.selected-course-image-container {
+  margin-bottom: 3vh;
+}
+
+.selected-course-maker {
+  display: flex;
+  align-items: center;
+  margin-top: 3vh;
+  margin-bottom: 4vh;
+}

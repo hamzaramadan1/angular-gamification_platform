@@ -1,0 +1,172 @@
+<body>
+<div class="container">
+  <div class="frame">
+    <div class="left">
+      <h2 class="text-center" style="color: white">Créez votre compte</h2>
+      <form #f="ngForm" (ngSubmit)="f.form.valid && register()">
+
+        <div class="error-message" *ngIf="errorMessage">
+          {{errorMessage}}
+        </div>
+
+        <div class="form-group">
+          <label for="username"></label>
+          <div class="position-relative">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Username"
+              [(ngModel)]="user.username"
+              #username="ngModel"
+              class="form-control form-control-sm"
+              [pattern]=usernamePattern
+              required
+            >
+            <fa-icon [icon]="faUser" class="position-absolute end-0 top-50 translate-middle-y me-2 user-icon"></fa-icon>
+          </div>
+          <div *ngIf="!username.valid && (username.dirty || username.touched)">
+            <div class="error-message" *ngIf="username.errors?.['required']">
+              Nom de compte requis.
+            </div>
+            <div class="error-message" *ngIf="username.errors?.['pattern']">
+              Format de nom de compte invalide.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="firstName"></label>
+          <div class="position-relative">
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              placeholder="First Name"
+              [(ngModel)]="user.firstName"
+              #firstName="ngModel"
+              class="form-control"
+              [pattern]=firstNamePattern
+              required
+            >
+            <fa-icon [icon]="faSignature" class="position-absolute end-0 top-50 translate-middle-y me-2 user-icon"></fa-icon>
+          </div>
+          <div *ngIf="!firstName.valid && (firstName.dirty || firstName.touched)">
+            <div class="error-message" *ngIf="firstName.errors?.['required']">
+              Prénom requis.
+            </div>
+            <div class="error-message" *ngIf="firstName.errors?.['pattern']">
+              Format de prénom invalide.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName"></label>
+          <div class="position-relative">
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              placeholder="Last Name"
+              [(ngModel)]="user.lastName"
+              #lastName="ngModel"
+              class="form-control"
+              [pattern]="lastNamePattern"
+              required
+            >
+            <fa-icon [icon]="faSignature" class="position-absolute end-0 top-50 translate-middle-y me-2 user-icon"></fa-icon>
+          </div>
+          <div *ngIf="!lastName.valid && (lastName.dirty || lastName.touched)">
+            <div class="error-message" *ngIf="lastName.errors?.['required']">
+              Nom requis.
+            </div>
+            <div class="error-message" *ngIf="lastName.errors?.['pattern']">
+              Format de nom invalide.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email"></label>
+          <div class="position-relative">
+            <input
+              type="text"
+              id="email"
+              name="email"
+              placeholder="Email address"
+              [(ngModel)]="user.email"
+              #email="ngModel"
+              class="form-control"
+              [pattern]="emailPattern"
+              required
+            >
+            <fa-icon [icon]="faEnvelope" class="position-absolute end-0 top-50 translate-middle-y me-2 user-icon"></fa-icon>
+          </div>
+          <div *ngIf="!email.valid && (email.dirty || email.touched)">
+            <div class="error-message" *ngIf="email.errors?.['required']">
+              Email requis.
+            </div>
+            <div class="error-message" *ngIf="email.errors?.['pattern']">
+              Format d'email invalide.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password"></label>
+          <div class="position-relative">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              [(ngModel)]="user.password"
+              #password="ngModel"
+              class="form-control"
+              required
+            >
+            <fa-icon [icon]="faLock" class="position-absolute end-0 top-50 translate-middle-y me-2 lock-icon"></fa-icon>
+          </div>
+          <div class="error-message" *ngIf="!password.valid && (password.dirty || password.touched)">
+            Mot de passe requis.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword"></label>
+          <div class="position-relative">
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirm password"
+              [(ngModel)]="user.confirmPassword"
+              #confirmPassword="ngModel"
+              class="form-control"
+              required
+            >
+            <fa-icon [icon]="faLock" class="position-absolute end-0 top-50 translate-middle-y me-2 lock-icon"></fa-icon>
+          </div>
+          <div class="error-message" *ngIf="!confirmPassword.valid && (confirmPassword.dirty || confirmPassword.touched)">
+            Confirmation de mot de passe requise.
+          </div>
+          <div class="error-message" *ngIf="confirmPassword.value !== password.value">
+            Les mots de passes ne sont pas identiques.
+          </div>
+        </div>
+
+        <button id="button_sinscrire" type="submit" class="btn btn-outline-warning w-100 mt-4">
+          S'inscrire
+        </button>
+
+      </form>
+      <p class="mt-3 mb-0 small">Vous avez déjà un compte ?<a [routerLink]="['/login']" class="fw-bold" style="color: white">Connectez-vous !</a></p>
+    </div>
+    <div class="right">
+      <img src="../assets/Sans_titre__1_-removebg-preview.png" alt="cap_logo">
+      <h2 id="title_inscription" style="margin-top: 70%">Inscription</h2>
+    </div>
+  </div>
+</div>
+</body>

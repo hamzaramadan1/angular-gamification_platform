@@ -1,0 +1,73 @@
+<app-navbar></app-navbar>
+<body>
+  <div class="left-container">
+    <h2 style="font-weight: 700">Cours</h2>
+    <form class="form-inline d-flex">
+      <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <div class="courses-container">
+      <div class="course-container" *ngFor="let item of courseList.reverse();">
+        <img class="course-image" style="height: 50px" src="assets/course_images/{{item.imageName}}">
+        <div class="cours-infos">
+          <div class="course-title">
+            <h5 style="font-weight: 700; text-transform: capitalize">{{item.courseName}}</h5>
+          </div>
+          <div class="course-description">
+            <p style="font-size: small; color: #777777">{{item.courseDescription}}</p>
+          </div>
+        </div>
+        <img class="course-arrow" style="height: 20px; cursor: pointer" src="assets/right-arrow.png" (click)="showCourseDetails(item)">
+      </div>
+    </div>
+  </div>
+  <div class="right-container" *ngIf="selectedCourse">
+    <div class="selected-course-image-container">
+      <img  style="max-height: 40vh" class="selected-course-image" src="assets/course_images/{{selectedCourse.imageName}}">
+    </div>
+    <h5 style="text-transform: capitalize; font-weight: 700">{{selectedCourse.courseName}}</h5>
+    <p>{{selectedCourse.courseDescription}}</p>
+    <div class="selected-course-maker">
+      <img *ngIf="selectedCourse.user?.userImageName == null" style="margin-right: 5vh; border-radius: 50%; height: 10vh" src="https://i.stack.imgur.com/34AD2.jpg">
+      <img *ngIf="selectedCourse.user?.userImageName !== null" style="margin-right: 5vh; border-radius: 50%; height: 10vh" src="assets/user_images/{{selectedCourse.user?.userImageName}}">
+      <div class="selected-course-maker-infos">
+        <p style="text-transform: capitalize">{{selectedCourse.user?.firstName}} {{selectedCourse.user?.lastName}}</p>
+        <p style="color: #777777; font-size: small">Professeur</p>
+      </div>
+    </div>
+    <p style="margin-bottom: 7vh">Lien vers le cours : <a href="#">{{selectedCourse.courseLink}}</a></p>
+    <h5 style="font-weight: 700; margin-bottom: 5vh;">Mini-jeux du cours</h5>
+    <div class="minigames-container" *ngFor="let item of minigameList; let i = index">
+      <div class="minigame-container">
+        <div class="minigame-user-record">
+          <span>Record : {{selectedMinigameScores[i]}}
+          </span>
+        </div>
+        <div class="minigame-atts">
+          <div class="minigame-image-container">
+            <img src="assets/hangman-game.png" style="height: 8vh;">
+          </div>
+          <div class="minigame-infos">
+            <p>{{item.description}}</p>
+            <p style="color: #777777">{{item.description}}</p>
+          </div>
+        </div>
+        <div class="minigame-start">
+          <img src="assets/right-arrow.png" style="height: 4vh; cursor: pointer" (click)="openPlayMinigameModals(i)">
+          <div class="modal" [ngStyle]="{'display': playMinigameModals[i] ? 'block' : 'none'}">
+            <div class="modal-content">
+              <span class="close" style="cursor: pointer;" (click)="closePlayMinigameModals(i)">&times;</span>
+              <h2>Question : {{item.question}}</h2>
+              <input style="margin: 2vh;" type="text" placeholder="Votre réponse" [(ngModel)]="userAnswer">
+              <button class="submit-button" (click)="checkAnswer(userAnswer, item.id!, i)">Submit</button>
+              <button class="cancel-button" (click)="closePlayMinigameModals(i)">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div>
+{{selectedMinigameScore}}
+</div>
+</body>

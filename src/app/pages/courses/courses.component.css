@@ -1,0 +1,139 @@
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.left-container {
+  padding: 8vh;
+  width: 50%;
+  background-color: #F7F7F7;
+}
+
+.right-container {
+  padding: 8vh;
+  width: 50%;
+}
+
+.selected-course-image-container {
+  text-align: center;
+  margin-bottom: 3vh;
+}
+
+.course-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 15px;
+  margin: 4vh 0vh;
+  box-shadow: 0px 0px 25px 5px rgba(201, 201, 201, 0.5);
+}
+
+.course-image {
+  padding-left: 3vh;
+  padding-right: 5vh;
+}
+
+.course-arrow {
+  position: absolute;
+  right: 2vh;
+  bottom: 1vh;
+}
+
+.selected-course-maker {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  margin-top: 3vh;
+  margin-bottom: 4vh;
+}
+
+.minigame-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #cccccc;
+  padding-left: 2vh;
+  padding-right: 2vh;
+  border-radius: 15px;
+  margin-bottom: 3vh;
+  width: 100%;
+}
+
+.minigame-user-record {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  top: -2vh;
+  color: white;
+}
+
+.minigame-user-record span {
+  background-color: #00ED5F;
+  border-radius: 15px;
+  padding: 0.5vh 1vh;
+}
+
+.minigame-atts {
+  display: flex;
+  align-items: center;
+}
+
+.minigame-infos {
+  margin-left: 2vh;
+}
+
+.minigame-start {
+  display: flex;
+  align-items: center;
+}
+
+.modal {
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+}
+
+.submit-button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background-color: #f44336; /* Red */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}

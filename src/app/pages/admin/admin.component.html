@@ -1,0 +1,268 @@
+<app-navbar></app-navbar>
+<body>
+  <h2 style="font-weight: 900">Aperçu</h2>
+  <div class="container">
+    <div class="box-container-up">
+      <div class="box-up" style="margin-right: 150px;background-color: #FFAC3E">
+        <p style="font-weight: bold; color: white">Envie d'ajouter un nouveau cours ? <img class="icon" src="assets/bibliotheque.png"></p>
+        <div class="button-up" (click)="openCourseModal()">
+          Ajouter un cours &nbsp; <img class="icon" style="height: 20px" src="assets/plus-symbole-noir.png">
+        </div>
+        <div id="create-course-modal" class="modal" [ngStyle]="{'display': courseModalVisible ? 'block' : 'none'}">
+          <div class="modal-content">
+            <span class="close" (click)="closeCourseModal()">&times;</span>
+            <h2>Create a New Course</h2>
+            <form #cf="ngForm" (ngSubmit)="cf.form.valid && saveCourse()">
+              <div class="form-group">
+                <label for="courseName"></label>
+                <div class="position-relative">
+                  <input
+                    type="text"
+                    id="courseName"
+                    name="courseName"
+                    placeholder="Course name"
+                    [(ngModel)]="course.courseName"
+                    class="form-control form-control-sm"
+                    required
+                  >
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="courseName"></label>
+                <div class="position-relative">
+                  <input
+                    type="text"
+                    id="courseLink"
+                    name="courseLink"
+                    placeholder="Course link"
+                    [(ngModel)]="course.courseLink"
+                    class="form-control form-control-sm"
+                    required
+                  >
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="courseDescription"></label>
+                <div class="position-relative">
+                  <textarea
+                    type="text"
+                    id="courseDescription"
+                    name="courseDescription"
+                    placeholder="course description"
+                    [(ngModel)]="course.courseDescription"
+                    class="form-control form-control-sm"
+                    required
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="file"></label>
+                <div class="position-relative">
+                  <input
+                    type="file"
+                    id="file"
+                    name="file"
+                    (change)="onFileSelected($event)"
+                    class="form-control form-control-sm"
+                    required
+                  >
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-outline-warning w-100 mt-4" [disabled]="!cf.form.valid">
+                Créer mon cours
+              </button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="box-up" style="background-color: #12ABDB">
+        <p style="font-weight: bold; color: white">Ajoutez votre mini-jeu ! <img class="icon" src="assets/manette.png"></p>
+        <div class="button-up" (click)="openMinigameModal()">
+          Ajouter un mini-jeu &nbsp; <img class="icon" style="height: 20px" src="assets/plus-symbole-noir.png">
+        </div>
+        <div id="create-minigame-modal" class="modal" [ngStyle]="{'display': minigameModalVisible ? 'block' : 'none'}">
+          <div class="modal-content">
+            <span class="close" (click)="closeMinigameModal()">&times;</span>
+            <h2>Create a New Minigame</h2>
+            <form #mf="ngForm" (ngSubmit)="mf.form.valid && saveMinigame()">
+              <div class="form-group">
+                <label for="description"></label>
+                <div class="position-relative">
+                  <input
+                    type="text"
+                    id="description"
+                    name="description"
+                    placeholder="Minigame description"
+                    [(ngModel)]="minigame.description"
+                    class="form-control form-control-sm"
+                    required
+                  >
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="courseId"></label>
+                <div class="position-relative">
+                  <select
+                    id="courseId"
+                    name="courseId"
+                    [(ngModel)]="course.id"
+                  >
+                    <option *ngFor="let item of courseList" value="{{item.id}}">{{item.courseName}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="question"></label>
+                <div class="position-relative">
+                  <input
+                    type="text"
+                    id="question"
+                    name="question"
+                    placeholder="Question"
+                    [(ngModel)]="minigame.question"
+                    class="form-control form-control-sm"
+                    required
+                  >
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="answer"></label>
+                <div class="position-relative">
+                  <textarea
+                    type="text"
+                    id="answer"
+                    name="answer"
+                    placeholder="Réponse"
+                    [(ngModel)]="minigame.answer"
+                    class="form-control form-control-sm"
+                    required
+                  ></textarea>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-outline-warning w-100 mt-4" [disabled]="!mf.form.valid">
+                Créer mon minijeu
+              </button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="box-container-left">
+      <div class="box" (click)="displayBoxInformation(1)" [class.selected]="selectedBox === 1" [ngClass]="{'box-clicked': selectedBox === 1}" style="background-color: #383856">
+        <p class="box-title" style="font-weight: bold; color: white">Étudiants</p>
+        <h2 style="color: white">{{usersCount}}</h2>
+      </div>
+      <div class="box" (click)="displayBoxInformation(2)" [class.selected]="selectedBox === 2" [ngClass]="{'box-clicked': selectedBox === 2}"style="background-color: #FFAC3E">
+        <p class="box-title" style="font-weight: bold; color: white">Cours</p>
+        <h2 style="color: white">{{coursesCount}}</h2>
+      </div>
+      <div class="box" (click)="displayBoxInformation(3)" [class.selected]="selectedBox === 3" [ngClass]="{'box-clicked': selectedBox === 3}"style=" background-color: #12ABDB">
+        <p class="box-title" style="font-weight: bold; color: white">Mini-jeux</p>
+        <h2 style="color: white">Box 3</h2>
+      </div>
+      <div class="long-box-left">
+        <p>{{selectedBox}}</p>
+      </div>
+    </div>
+    <div class="box-container-right">
+      <div class="scroll-box">
+        <h5 style="font-weight: bold; margin: 10px">Mini-jeux les plus joués</h5>
+        <ul>
+          <li (click)="displayItemInformation(1)" [class.selected]="selectedItem === 1" [ngClass]="{'item-clicked': selectedItem === 1}">
+            <div class="item-rank">
+              <h2>1</h2>
+            </div>
+            <img class="icon" src="/assets/memory%20(2).png">
+            <div class="item-infos">
+              <div class="item-title">
+                Mini-jeu 1
+              </div>
+              <div class="item-desc">
+                Ceçi est un mini-jeu.
+              </div>
+              <div class="item-course">
+                Cours 1
+              </div>
+            </div>
+            <div class="item-playtime">
+              Joué 120 fois.
+            </div>
+          </li>
+          <li (click)="displayItemInformation(2)" [class.selected]="selectedItem === 2" [ngClass]="{'item-clicked': selectedItem === 2}">
+            <div class="item-rank">
+              <h2>2</h2>
+            </div>
+            <img class="icon" src="/assets/memory%20(2).png">
+            <div class="item-infos">
+              <div class="item-title">
+                Mini-jeu 2
+              </div>
+              <div class="item-desc">
+                Ceçi est un mini-jeu.
+              </div>
+              <div class="item-course">
+                Cours 2
+              </div>
+            </div>
+            <div class="item-playtime">
+              Joué 70 fois.
+            </div>
+          </li>
+          <li (click)="displayItemInformation(3)" [class.selected]="selectedItem === 3" [ngClass]="{'item-clicked': selectedItem === 3}">
+            <div class="item-rank">
+              <h2>3</h2>
+            </div>
+            <img class="icon" src="/assets/memory%20(2).png">
+            <div class="item-infos">
+              <div class="item-title">
+                Mini-jeu 3
+              </div>
+              <div class="item-desc">
+                Ceçi est un mini-jeu.
+              </div>
+              <div class="item-course">
+                Cours 3
+              </div>
+            </div>
+            <div class="item-playtime">
+              Joué 36 fois.
+            </div>
+          </li>
+          <li (click)="displayItemInformation(4)" [class.selected]="selectedItem === 4" [ngClass]="{'item-clicked': selectedItem === 4}">
+            <div class="item-rank">
+              <h2>4</h2>
+            </div>
+            <img class="icon" src="/assets/memory%20(2).png">
+            <div class="item-infos">
+              <div class="item-title">
+                Mini-jeu 4
+              </div>
+              <div class="item-desc">
+                Ceçi est un mini-jeu.
+              </div>
+              <div class="item-course">
+                Cours 2
+              </div>
+            </div>
+            <div class="item-playtime">
+              Joué 5 fois.
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="long-box-right">
+        {{selectedItem}}
+      </div>
+    </div>
+</body>

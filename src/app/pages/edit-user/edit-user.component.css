@@ -1,0 +1,140 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+.left {
+  background-color: #383856;
+  float: left;
+  width: 25%;
+  text-align: center;
+  padding-top: 50px;
+  height: 87.4vh;
+}
+.right {
+  float: right;
+  width: 75%;
+  padding-top: 3vh;
+  padding-left: 10vh;
+}
+.left h1 {
+  font-size: 5vh;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: white;
+}
+.user-level span {
+  background-color: #00ED5F;
+  color: white;
+  border-radius: 1.5vh;
+  padding: 0.5vh 1vh;
+}
+.user-name {
+  font-size: 4vh;
+  font-weight: 700;
+  color: white;
+}
+.user-grade {
+  font-size: 3vh;
+  font-weight: 300;
+  color: white;
+}
+h1 {
+  font-size: 3vh;
+  font-weight: 700;
+}
+.profilePic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+label {
+  display: block;
+  margin-bottom: 1vh;
+  font-weight: 500;
+}
+.right form button {
+  background-color: #383856;
+  color: white;
+  padding: 1vh 4vh;
+  border-radius: 4vh;
+  cursor: pointer;
+  margin-top: 3vh;
+  -webkit-transition: color 0.5s;
+  -moz-transition:    color 0.5s;
+  -ms-transition:     color 0.5s;
+  -o-transition:      color 0.5s;
+  transition:         color 0.5s;
+  -webkit-transition: background-color 0.5s;
+  -moz-transition:    background-color 0.5s;
+  -ms-transition:     background-color 0.5s;
+  -o-transition:      background-color 0.5s;
+  transition:         background-color 0.5s;
+}
+.right form button:hover {
+  color: #383856;
+  background-color: white;
+}
+
+.right form button:disabled {
+  background-color: #ddd;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+input[type="text"], input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  font-size: 2vh;
+}
+.separator {
+  border-top: 1px solid #ccc;
+  margin-bottom: 2vh;
+}
+.left button {
+  background-color: #383856;
+  color: white;
+  border: 1px solid white;
+  padding: 1vh 4vh;
+  border-radius: 4vh;
+  cursor: pointer;
+  margin-top: 3vh;
+  -webkit-transition: color 0.5s;
+  -moz-transition:    color 0.5s;
+  -ms-transition:     color 0.5s;
+  -o-transition:      color 0.5s;
+  transition:         color 0.5s;
+  -webkit-transition: background-color 0.5s;
+  -moz-transition:    background-color 0.5s;
+  -ms-transition:     background-color 0.5s;
+  -o-transition:      background-color 0.5s;
+  transition:         background-color 0.5s;
+}
+.left button:hover {
+  color: #383856;
+  background-color: white;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+#userImageFile {
+  display: none;
+}
+
+#userImageFileLabel {
+  cursor: pointer;
+  background-color: #FFAC3E;
+  border-radius: 15px;
+  color: white;
+  display: table;
+  margin: auto;
+  padding: 2vh;
+}

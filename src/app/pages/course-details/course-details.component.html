@@ -1,0 +1,18 @@
+<app-navbar></app-navbar>
+<div class="right-container">
+  <div class="selected-course-image-container">
+    <img  style="max-height: 40vh" class="selected-course-image" src="assets/course_images/{{selectedCourse.imageName}}">
+  </div>
+  <h5 style="text-transform: capitalize; font-weight: 700">{{selectedCourse.courseName}}</h5>
+  <p>{{selectedCourse.courseDescription}}</p>
+  <div class="selected-course-maker">
+    <img *ngIf="selectedCourse.user?.userImageName == null" style="margin-right: 5vh; border-radius: 50%; height: 10vh" src="https://i.stack.imgur.com/34AD2.jpg">
+    <img *ngIf="selectedCourse.user?.userImageName !== null" style="margin-right: 5vh; border-radius: 50%; height: 10vh" src="assets/user_images/{{selectedCourse.user?.userImageName}}">
+    <div class="selected-course-maker-infos">
+      <p style="text-transform: capitalize">{{selectedCourse.user?.firstName}} {{selectedCourse.user?.lastName}}</p>
+      <p style="color: #777777; font-size: small">Professeur</p>
+    </div>
+  </div>
+  <p style="margin-bottom: 7vh">Lien vers le cours : <a href="#">{{selectedCourse.courseLink}}</a></p>
+  <h5 style="font-weight: 700">Mini-jeux du cours</h5>
+</div>

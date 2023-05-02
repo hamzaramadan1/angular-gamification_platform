@@ -1,0 +1,52 @@
+.navbar {
+  background-color: rgb(56,56,86);
+  border-bottom: 1px solid white;
+}
+
+.navbar-nav {
+  width: 100%;
+}
+
+.nav-item {
+  margin-left: 5vh;
+  margin-right: 5vh;
+  font-size: 18px;
+}
+
+.nav-link {
+  color: white;
+}
+
+.navbar-nav .nav-link.active {
+  color: white;
+  border-bottom: solid;
+}
+
+.form-inline {
+  display: flex;
+  align-items: center; /* aligns the items vertically center */
+  justify-content: flex-end; /* moves the button to the right */
+}
+
+.form-inline input {
+  height: 40px; /* sets the height of the input field */
+  border-radius: 5px; /* adds rounded corners to the input field */
+  border: none; /* removes the border */
+  padding: 5px; /* adds some padding to the input field */
+  margin-right: 2vh;
+}
+
+.form-inline button {
+  height: 40px; /* sets the height of the button */
+  border-radius: 5px; /* adds rounded corners to the button */
+  border: none; /* removes the border */
+  padding: 0 10px; /* adds some padding to the button */
+  background-color: #28a745; /* sets the background color */
+  color: #fff; /* sets the text color */
+  cursor: pointer; /* adds a pointer cursor on hover */
+}
+
+.form-inline button:hover {
+  background-color: #218838; /* changes the background color on hover */
+}
+
