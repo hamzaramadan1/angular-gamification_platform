@@ -13,6 +13,9 @@ import {AdminComponent} from "./pages/admin/admin.component";
 import {EditUserComponent} from "./pages/edit-user/edit-user.component";
 import {CoursesComponent} from "./pages/courses/courses.component";
 import {CourseDetailsComponent} from "./pages/course-details/course-details.component";
+import { HangComponent } from './pages/game/app.component';
+import { CaComponent } from './pages/memory-game/app.component';
+import { WordSearchGameComponent } from './pages/word-search-game/word-search-game.component';
 
 const routes: Routes = [
 
@@ -29,7 +32,7 @@ const routes: Routes = [
   {path: 'admin',
     component: AdminComponent,
     canActivate: [AuthGuard],
-    data: {roles: [Role.ADMIN]}
+    data: {roles: [Role.ADMIN, Role.SUPERADMIN]}
   },
   {path: 'superadmin',
     component: SuperAdminComponent,
@@ -39,7 +42,7 @@ const routes: Routes = [
   {path: 'edit-user',
     component: EditUserComponent,
     canActivate: [AuthGuard],
-    data: {roles: [Role.USER, Role.ADMIN]}
+    data: {roles: [Role.USER, Role.ADMIN, Role.SUPERADMIN]}
   },
   {path: 'detail/:id',
     component: DetailComponent,
@@ -54,7 +57,22 @@ const routes: Routes = [
   {path: 'courses',
     component: CoursesComponent,
     canActivate: [AuthGuard],
-    data: {roles: [Role.USER, Role.ADMIN]}
+    data: {roles: [Role.USER, Role.ADMIN, Role.SUPERADMIN]}
+  },
+  {path: 'game/:id',
+    component: HangComponent,
+    canActivate: [AuthGuard],
+    data: {roles: [Role.USER]}
+  },
+  {path: 'memoryGame/:id',
+  component: CaComponent,
+  canActivate: [AuthGuard],
+  data: {roles: [Role.USER]}
+  },
+  {path: 'puzzleGame/:id',
+  component: WordSearchGameComponent,
+  canActivate: [AuthGuard],
+  data: {roles: [Role.USER]}
   },
   {path: '404', component: NotFoundComponent},
   {path: '401', component: UnauthorizedComponent},

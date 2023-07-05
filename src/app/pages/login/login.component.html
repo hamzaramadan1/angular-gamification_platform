@@ -3,13 +3,13 @@
     <div class="frame">
       <div class="left">
         <h1 class="text-center">Bienvenue</h1>
-        <form #f="ngForm" (ngSubmit)="f.form.valid && login()">
+        <form #f="ngForm" (ngSubmit)="f.form.valid && login()" style="position: relative;">
 
-          <div class="error-message" *ngIf="errorMessage">
+          <div class="error-message" *ngIf="errorMessage" style="position: absolute;">
             {{errorMessage}}
           </div>
 
-          <div class="form-group">
+          <div class="form-group" style="position: relative;">
             <label for="username"></label>
             <div class="position-relative">
               <input
@@ -26,16 +26,16 @@
               <fa-icon [icon]="faUser" class="position-absolute end-0 top-50 translate-middle-y me-2 user-icon"></fa-icon>
             </div>
             <div *ngIf="!username.valid && (username.dirty || username.touched)">
-              <div class="error-message" *ngIf="username.errors?.['required']">
+              <div class="error-message" *ngIf="username.errors?.['required']" style="position: absolute; top: 10vh;">
                 Nom de compte requis.
               </div>
-              <div class="error-message" *ngIf="username.errors?.['pattern']">
+              <div class="error-message" *ngIf="username.errors?.['pattern']" style="position: absolute; top: 10vh;">
                 Format de nom de compte invalide.
               </div>
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" style="position: relative;">
             <label for="password"></label>
             <div class="position-relative">
               <input
@@ -50,7 +50,7 @@
               >
               <fa-icon [icon]="faLock" class="position-absolute end-0 top-50 translate-middle-y me-2 lock-icon"></fa-icon>
             </div>
-            <div class="error-message" *ngIf="!password.valid && (password.dirty || password.touched)">
+            <div class="error-message" *ngIf="!password.valid && (password.dirty || password.touched)" style="position: absolute; top: 10vh;">
               Mot de passe requis.
             </div>
           </div>

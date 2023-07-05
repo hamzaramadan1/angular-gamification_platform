@@ -11,7 +11,7 @@
         <div id="create-course-modal" class="modal" [ngStyle]="{'display': courseModalVisible ? 'block' : 'none'}">
           <div class="modal-content">
             <span class="close" (click)="closeCourseModal()">&times;</span>
-            <h2>Create a New Course</h2>
+            <h2>Créer un nouveau cours</h2>
             <form #cf="ngForm" (ngSubmit)="cf.form.valid && saveCourse()">
               <div class="form-group">
                 <label for="courseName"></label>
@@ -80,189 +80,466 @@
           </div>
         </div>
       </div>
+
       <div class="box-up" style="background-color: #12ABDB">
-        <p style="font-weight: bold; color: white">Ajoutez votre mini-jeu ! <img class="icon" src="assets/manette.png"></p>
-        <div class="button-up" (click)="openMinigameModal()">
+        <p style="font-weight: bold; color: white">Ajoutez votre mini-jeu <img class="icon" src="assets/manette.png"></p>
+        <div class="button-up" (click)="openMinigamesModal()">
           Ajouter un mini-jeu &nbsp; <img class="icon" style="height: 20px" src="assets/plus-symbole-noir.png">
         </div>
-        <div id="create-minigame-modal" class="modal" [ngStyle]="{'display': minigameModalVisible ? 'block' : 'none'}">
+        <div id="create-minigame-modal" class="modal" [ngStyle]="{'display': minigamesModalVisible ? 'block' : 'none'}">
           <div class="modal-content">
-            <span class="close" (click)="closeMinigameModal()">&times;</span>
-            <h2>Create a New Minigame</h2>
-            <form #mf="ngForm" (ngSubmit)="mf.form.valid && saveMinigame()">
-              <div class="form-group">
-                <label for="description"></label>
-                <div class="position-relative">
-                  <input
-                    type="text"
-                    id="description"
-                    name="description"
-                    placeholder="Minigame description"
-                    [(ngModel)]="minigame.description"
-                    class="form-control form-control-sm"
-                    required
-                  >
+            <span class="close" (click)="closeMinigamesModal()">&times;</span>
+            <h2>Créer un nouveau mini-jeu</h2>
+
+            <div class="minigame-type" (click)="openMinigameModal()">
+              <p style="margin: 0;">Ajoutez votre Guess the word ! <img class="icon" src="assets/plant-icon.png"></p>
+              <div id="create-minigame-modal" class="modal" [ngStyle]="{'display': minigameModalVisible ? 'block' : 'none'}">
+                <div class="modal-content">
+                  <span class="close" (click)="closeMinigameModal()">&times;</span>
+                  <h2>Créer un nouveau Guess the word</h2>
+                  <form #mf="ngForm" (ngSubmit)="mf.form.valid && saveMinigame()">
+                    <div class="form-group">
+                      <label for="description"></label>
+                      <div class="position-relative">
+                        <input
+                          type="text"
+                          id="description"
+                          name="description"
+                          placeholder="Minigame description"
+                          [(ngModel)]="minigame.description"
+                          class="form-control form-control-sm"
+                          required
+                        >
+                      </div>
+                    </div>
+      
+                    <div *ngIf="currentUser.role === 'ADMIN'" class="form-group">
+                      <label for="courseId"></label>
+                      <div class="position-relative">
+                        <select
+                          id="courseId"
+                          name="courseId"
+                          [(ngModel)]="course.id"
+                        >
+                        <option *ngFor="let item of courseForUserList" value="{{item.id}}">{{item.courseName}}</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div *ngIf="currentUser.role === 'SUPERADMIN'" class="form-group">
+                      <label for="courseId"></label>
+                      <div class="position-relative">
+                        <select
+                          id="courseId"
+                          name="courseId"
+                          [(ngModel)]="course.id"
+                        >
+                        <option *ngFor="let item of courseList" value="{{item.id}}">{{item.courseName}}</option>
+                        </select>
+                      </div>
+                    </div>
+      
+                    <div class="form-group">
+                      <label>Questions</label>
+                      <button type="button" (click)="addQuestion()">Add Question</button>
+                      <div *ngFor="let question of minigame.questions; let i = index" class="row mb-2">
+                        <div class="col-10">
+                          <input
+                            type="text"
+                            name="questionText{{i}}"
+                            class="form-control"
+                            [attr.placeholder]="'Question n° ' + (i + 1)"
+                            [(ngModel)]="question.questionText"
+                            required
+                          >
+                        </div>
+                        <div class="col-10">
+                          <input
+                            type="text"
+                            name="answerText{{i}}"
+                            class="form-control"
+                            [attr.placeholder]="'Réponse pour question n° ' + (i + 1)"
+                            [(ngModel)]="question.answerText"
+                            required
+                          >
+                        </div>
+      
+                        <div class="col-2">
+                          <button type="button" class="btn btn-danger btn-sm" (click)="removeQuestion(i)">
+                            &times;
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+      
+                    <button type="submit" class="btn btn-outline-warning w-100 mt-4" [disabled]="!mf.form.valid">
+                      Créer mon guess the word
+                    </button>
+      
+                  </form>
                 </div>
               </div>
+            </div>
+      
+            <div class="minigame-type" (click)="openMemoryGameModal()">
+              <p style="margin: 0;">Ajoutez votre memory game ! <img class="icon" src="assets/memory.png"></p>
+              <div id="create-minigame-modal" class="modal" [ngStyle]="{'display': memoryGameModalVisible ? 'block' : 'none'}">
+                <div class="modal-content">
+                  <span class="close" (click)="closeMemoryGameModal()">&times;</span>
+                  <h2>Créer un nouveau Memory Game</h2>
+                  <form #mgf="ngForm" (ngSubmit)="mgf.form.valid && saveMemoryGame()">
+                    <div class="form-group">
+                      <label for="description"></label>
+                      <div class="position-relative">
+                        <input
+                          type="text"
+                          id="description"
+                          name="description"
+                          placeholder="Memory game description"
+                          [(ngModel)]="memoryGame.description"
+                          class="form-control form-control-sm"
+                          required
+                        >
+                      </div>
+                    </div>
+      
+                    <div *ngIf="currentUser.role === 'ADMIN'" class="form-group">
+                      <label for="courseId"></label>
+                      <div class="position-relative">
+                        <select
+                          id="courseId"
+                          name="courseId"
+                          [(ngModel)]="course.id"
+                        >
+                        <option *ngFor="let item of courseForUserList" value="{{item.id}}">{{item.courseName}}</option>
+                        </select>
+                      </div>
+                    </div>
 
-              <div class="form-group">
-                <label for="courseId"></label>
-                <div class="position-relative">
-                  <select
-                    id="courseId"
-                    name="courseId"
-                    [(ngModel)]="course.id"
-                  >
-                    <option *ngFor="let item of courseList" value="{{item.id}}">{{item.courseName}}</option>
-                  </select>
+                    <div *ngIf="currentUser.role === 'SUPERADMIN'" class="form-group">
+                      <label for="courseId"></label>
+                      <div class="position-relative">
+                        <select
+                          id="courseId"
+                          name="courseId"
+                          [(ngModel)]="course.id"
+                        >
+                        <option *ngFor="let item of courseList" value="{{item.id}}">{{item.courseName}}</option>
+                        </select>
+                      </div>
+                    </div>
+      
+                    <div class="form-group">
+                      <label>Cards</label>
+                      <button type="button" (click)="addCard()">Add Card</button>
+                      <div *ngFor="let card of memoryGame.cards; let i = index" class="row mb-2">
+                        <div class="col-10">
+                          <input
+                            type="text"
+                            name="cardQuestion{{i}}"
+                            class="form-control"
+                            [attr.placeholder]="'Question n° ' + (i + 1)"
+                            [(ngModel)]="memoryGame.cards[i].cardQuestion"
+                            required
+                          >
+                        </div>
+                        <div class="col-10">
+                          <input
+                            type="text"
+                            name="cardAnswer{{i}}"
+                            class="form-control"
+                            [attr.placeholder]="'Réponse pour question n° ' + (i + 1)"
+                            [(ngModel)]="memoryGame.cards[i].cardAnswer"
+                            required
+                          >
+                        </div>
+      
+                        <div class="col-2">
+                          <button type="button" class="btn btn-danger btn-sm" (click)="removeCard(i)">
+                            &times;
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+      
+                    <button type="submit" class="btn btn-outline-warning w-100 mt-4" [disabled]="!mgf.form.valid">
+                      Créer mon memory game
+                    </button>
+      
+                  </form>
                 </div>
               </div>
+            </div>
 
-              <div class="form-group">
-                <label for="question"></label>
-                <div class="position-relative">
-                  <input
-                    type="text"
-                    id="question"
-                    name="question"
-                    placeholder="Question"
-                    [(ngModel)]="minigame.question"
-                    class="form-control form-control-sm"
-                    required
-                  >
+            <div class="minigame-type" (click)="openPuzzleGameModal()">
+              <p style="margin: 0;">Ajoutez votre word search puzzle ! <img class="icon" src="assets/crossword.png"></p>
+              <div id="create-minigame-modal" class="modal" [ngStyle]="{'display': puzzleGameModalVisible ? 'block' : 'none'}">
+                <div class="modal-content">
+                  <span class="close" (click)="closePuzzleGameModal()">&times;</span>
+                  <h2>Créer un nouveau Puzzle Game</h2>
+                  <form #pgf="ngForm" (ngSubmit)="pgf.form.valid && savePuzzleGame()">
+                    <div class="form-group">
+                      <label for="description"></label>
+                      <div class="position-relative">
+                        <input
+                          type="text"
+                          id="description"
+                          name="description"
+                          placeholder="Puzzle game description"
+                          [(ngModel)]="puzzleGame.description"
+                          class="form-control form-control-sm"
+                          required
+                        >
+                      </div>
+                    </div>
+      
+                    <div *ngIf="currentUser.role === 'ADMIN'" class="form-group">
+                      <label for="courseId"></label>
+                      <div class="position-relative">
+                        <select
+                          id="courseId"
+                          name="courseId"
+                          [(ngModel)]="course.id"
+                        >
+                        <option *ngFor="let item of courseForUserList" value="{{item.id}}">{{item.courseName}}</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div *ngIf="currentUser.role === 'SUPERADMIN'" class="form-group">
+                      <label for="courseId"></label>
+                      <div class="position-relative">
+                        <select
+                          id="courseId"
+                          name="courseId"
+                          [(ngModel)]="course.id"
+                        >
+                        <option *ngFor="let item of courseList" value="{{item.id}}">{{item.courseName}}</option>
+                        </select>
+                      </div>
+                    </div>
+      
+                    <div class="form-group">
+                      <label>WordSearches</label>
+                      <button type="button" [disabled]="puzzleGame.wordSearches.length >= 10" (click)="addWordSearch()">Add WordSearch</button>
+                      <div *ngFor="let wordSearch of puzzleGame.wordSearches; let i = index" class="row mb-2">
+                        <div class="col-10">
+                          <input
+                            type="text"
+                            name="wordSearchQuestion{{i}}"
+                            class="form-control"
+                            [attr.placeholder]="'Question n° ' + (i + 1)"
+                            [(ngModel)]="puzzleGame.wordSearches[i].wordSearchQuestion"
+                            required
+                          >
+                        </div>
+                        <div class="col-10">
+                          <input
+                            type="text"
+                            name="wordSearchAnswer{{i}}"
+                            class="form-control"
+                            [attr.placeholder]="'Réponse pour question n° ' + (i + 1)"
+                            [(ngModel)]="puzzleGame.wordSearches[i].wordSearchAnswer"
+                            required
+                          >
+                        </div>
+      
+                        <div class="col-2">
+                          <button type="button" class="btn btn-danger btn-sm" (click)="removeWordSearch(i)">
+                            &times;
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+      
+                    <button type="submit" class="btn btn-outline-warning w-100 mt-4" [disabled]="!pgf.form.valid">
+                      Créer mon puzzle game
+                    </button>
+      
+                  </form>
                 </div>
               </div>
+            </div>
 
-              <div class="form-group">
-                <label for="answer"></label>
-                <div class="position-relative">
-                  <textarea
-                    type="text"
-                    id="answer"
-                    name="answer"
-                    placeholder="Réponse"
-                    [(ngModel)]="minigame.answer"
-                    class="form-control form-control-sm"
-                    required
-                  ></textarea>
-                </div>
-              </div>
 
-              <button type="submit" class="btn btn-outline-warning w-100 mt-4" [disabled]="!mf.form.valid">
-                Créer mon minijeu
-              </button>
-
-            </form>
           </div>
         </div>
       </div>
+
+
       </div>
     </div>
-    <div class="box-container-left">
-      <div class="box" (click)="displayBoxInformation(1)" [class.selected]="selectedBox === 1" [ngClass]="{'box-clicked': selectedBox === 1}" style="background-color: #383856">
-        <p class="box-title" style="font-weight: bold; color: white">Étudiants</p>
-        <h2 style="color: white">{{usersCount}}</h2>
+    <div class="box-container-down">
+      <div class="box-container-left">
+        <div class="box" (click)="displayBoxInformation(1)" [class.selected]="selectedBox === 1" [ngClass]="{'box-clicked': selectedBox === 1}" style="background-color: #383856">
+          <p class="box-title" style="font-weight: bold; color: white">Étudiants</p>
+          <h2 style="color: white">{{usersCount}}</h2>
+        </div>
+        <div class="box" (click)="displayBoxInformation(2)" [class.selected]="selectedBox === 2" [ngClass]="{'box-clicked': selectedBox === 2}"style="background-color: #FFAC3E">
+          <p class="box-title" style="font-weight: bold; color: white">Cours</p>
+          <div *ngIf="currentUser.role === 'ADMIN'">
+            <h2 style="color: white">{{coursesForUserCount}}</h2>
+          </div>
+          <div *ngIf="currentUser.role === 'SUPERADMIN'">
+            <h2 style="color: white">{{coursesCount}}</h2>
+          </div>
+        </div>
+        <div class="box" (click)="displayBoxInformation(3)" [class.selected]="selectedBox === 3" [ngClass]="{'box-clicked': selectedBox === 3}"style=" background-color: #12ABDB">
+          <p class="box-title" style="font-weight: bold; color: white">Mini-jeux</p>
+          <div *ngIf="currentUser.role === 'ADMIN'">
+            <h2 style="color: white">{{minigamesForUserCount + memoryGamesForUserCount + puzzleGamesForUserCount}}</h2>
+          </div>
+          <div *ngIf="currentUser.role === 'SUPERADMIN'">
+            <h2 style="color: white">{{minigamesCount + memoryGamesCount + puzzleGamesCount}}</h2>
+          </div>
+        </div>
+        <div class="long-box-left">
+          <p>{{selectedBox}}</p>
+        </div>
       </div>
-      <div class="box" (click)="displayBoxInformation(2)" [class.selected]="selectedBox === 2" [ngClass]="{'box-clicked': selectedBox === 2}"style="background-color: #FFAC3E">
-        <p class="box-title" style="font-weight: bold; color: white">Cours</p>
-        <h2 style="color: white">{{coursesCount}}</h2>
-      </div>
-      <div class="box" (click)="displayBoxInformation(3)" [class.selected]="selectedBox === 3" [ngClass]="{'box-clicked': selectedBox === 3}"style=" background-color: #12ABDB">
-        <p class="box-title" style="font-weight: bold; color: white">Mini-jeux</p>
-        <h2 style="color: white">Box 3</h2>
-      </div>
-      <div class="long-box-left">
-        <p>{{selectedBox}}</p>
-      </div>
-    </div>
-    <div class="box-container-right">
-      <div class="scroll-box">
-        <h5 style="font-weight: bold; margin: 10px">Mini-jeux les plus joués</h5>
-        <ul>
-          <li (click)="displayItemInformation(1)" [class.selected]="selectedItem === 1" [ngClass]="{'item-clicked': selectedItem === 1}">
-            <div class="item-rank">
-              <h2>1</h2>
+      <div class="box-container-right">
+        <div class="scroll-box">
+          <h5 style="font-weight: bold; margin: 10px">Vos Mini-jeux</h5>
+          <ul *ngIf="currentUser.role ==='ADMIN'">
+            <h6 style="display: flex; align-items: center; justify-content: center; background-color: #C9C9C9; padding: 2vh;">Guess the word</h6>
+            <div *ngFor="let minigame of minigameForUserList; let i = index">
+              <li (click)="displayItemInformation(i)" [class.selected]="selectedItem === i" [ngClass]="{'item-clicked': selectedItem === i}">
+                <div class="item-left">
+                  <img class="icon" src="/assets/plant-icon.png">
+                  <div class="item-infos">
+                    <div class="item-title">
+                      Guess the word Game
+                    </div>
+                    <div class="item-desc">
+                      {{minigameForUserList[i].description}}
+                    </div>
+                    <div class="item-course">
+                      {{minigameForUserList[i].course.courseName}}
+                    </div>
+                  </div>
+                </div>
+                <div class="item-playtime">
+                  Joué {{minigameScoresForUserCount[i]}} fois.
+                </div>
+              </li>
             </div>
-            <img class="icon" src="/assets/memory%20(2).png">
-            <div class="item-infos">
-              <div class="item-title">
-                Mini-jeu 1
-              </div>
-              <div class="item-desc">
-                Ceçi est un mini-jeu.
-              </div>
-              <div class="item-course">
-                Cours 1
-              </div>
+            <h6 style="display: flex; align-items: center; justify-content: center; background-color: #C9C9C9; padding: 2vh;">Memory Game</h6>
+            <div *ngFor="let memoryGame of memoryGameForUserList; let i = index">
+              <li (click)="displayItemInformation(i)" [class.selected]="selectedItem === i" [ngClass]="{'item-clicked': selectedItem === i}">
+                <div class="item-left">
+                  <img class="icon" src="/assets/memory.png">
+                  <div class="item-infos">
+                    <div class="item-title">
+                      Memory Game
+                    </div>
+                    <div class="item-desc">
+                      {{memoryGameForUserList[i].description}}
+                    </div>
+                    <div class="item-course">
+                      {{memoryGameForUserList[i].course.courseName}}
+                    </div>
+                  </div>
+                </div>
+                <div class="item-playtime">
+                  Joué {{memoryGameScoresForUserCount[i]}} fois.
+                </div>
+              </li>
             </div>
-            <div class="item-playtime">
-              Joué 120 fois.
+            <h6 style="display: flex; align-items: center; justify-content: center; background-color: #C9C9C9; padding: 2vh; margin: 0;">Word Search Game</h6>
+            <div *ngFor="let puzzleGame of puzzleGameForUserList; let i = index">
+              <li (click)="displayItemInformation(i)" [class.selected]="selectedItem === i" [ngClass]="{'item-clicked': selectedItem === i}">
+                <div class="item-left">
+                  <img class="icon" src="/assets/crossword.png">
+                  <div class="item-infos">
+                    <div class="item-title">
+                      Word Search Game
+                    </div>
+                    <div class="item-desc">
+                      {{puzzleGameForUserList[i].description}}
+                    </div>
+                    <div class="item-course">
+                      {{puzzleGameForUserList[i].course.courseName}}
+                    </div>
+                  </div>
+                </div>
+                <div class="item-playtime">
+                  Joué {{puzzleGameScoresForUserCount[i]}} fois.
+                </div>
+              </li>
             </div>
-          </li>
-          <li (click)="displayItemInformation(2)" [class.selected]="selectedItem === 2" [ngClass]="{'item-clicked': selectedItem === 2}">
-            <div class="item-rank">
-              <h2>2</h2>
+          </ul>
+          <ul *ngIf="currentUser.role ==='SUPERADMIN'">
+            <h6 style="display: flex; align-items: center; justify-content: center; background-color: #C9C9C9; padding: 2vh;">Guess the word</h6>
+            <div *ngFor="let minigame of minigameList; let i = index">
+              <li (click)="displayItemInformation(i)" [class.selected]="selectedItem === i" [ngClass]="{'item-clicked': selectedItem === i}">
+                <div class="item-left">
+                  <img class="icon" src="/assets/plant-icon.png">
+                  <div class="item-infos">
+                    <div class="item-title">
+                      Guess the word Game
+                    </div>
+                    <div class="item-desc">
+                      {{minigameList[i].description}}
+                    </div>
+                    <div class="item-course">
+                      {{minigameList[i].course.courseName}}
+                    </div>
+                  </div>
+                </div>
+                <div class="item-playtime">
+                  Joué {{minigameScoresCount[i]}} fois.
+                </div>
+              </li>
             </div>
-            <img class="icon" src="/assets/memory%20(2).png">
-            <div class="item-infos">
-              <div class="item-title">
-                Mini-jeu 2
-              </div>
-              <div class="item-desc">
-                Ceçi est un mini-jeu.
-              </div>
-              <div class="item-course">
-                Cours 2
-              </div>
+            <h6 style="display: flex; align-items: center; justify-content: center; background-color: #C9C9C9; padding: 2vh;">Memory Game</h6>
+            <div *ngFor="let memoryGame of memoryGameList; let i = index">
+              <li (click)="displayItemInformation(i)" [class.selected]="selectedItem === i" [ngClass]="{'item-clicked': selectedItem === i}">
+                <div class="item-left">
+                  <img class="icon" src="/assets/memory.png">
+                  <div class="item-infos">
+                    <div class="item-title">
+                      Memory Game
+                    </div>
+                    <div class="item-desc">
+                      {{memoryGameList[i].description}}
+                    </div>
+                    <div class="item-course">
+                      {{memoryGameList[i].course.courseName}}
+                    </div>
+                  </div>
+                </div>
+                <div class="item-playtime">
+                  Joué {{memoryGameScoresCount[i]}} fois.
+                </div>
+              </li>
             </div>
-            <div class="item-playtime">
-              Joué 70 fois.
+            <h6 style="display: flex; align-items: center; justify-content: center; background-color: #C9C9C9; padding: 2vh; margin: 0;">Word Search Game</h6>
+            <div *ngFor="let puzzleGame of puzzleGameList; let i = index">
+              <li (click)="displayItemInformation(i)" [class.selected]="selectedItem === i" [ngClass]="{'item-clicked': selectedItem === i}">
+                <div class="item-left">
+                  <img class="icon" src="/assets/crossword.png">
+                  <div class="item-infos">
+                    <div class="item-title">
+                      Word Search Game
+                    </div>
+                    <div class="item-desc">
+                      {{puzzleGameList[i].description}}
+                    </div>
+                    <div class="item-course">
+                      {{puzzleGameList[i].course.courseName}}
+                    </div>
+                  </div>
+                </div>
+                <div class="item-playtime">
+                  Joué {{puzzleGameScoresCount[i]}} fois.
+                </div>
+              </li>
             </div>
-          </li>
-          <li (click)="displayItemInformation(3)" [class.selected]="selectedItem === 3" [ngClass]="{'item-clicked': selectedItem === 3}">
-            <div class="item-rank">
-              <h2>3</h2>
-            </div>
-            <img class="icon" src="/assets/memory%20(2).png">
-            <div class="item-infos">
-              <div class="item-title">
-                Mini-jeu 3
-              </div>
-              <div class="item-desc">
-                Ceçi est un mini-jeu.
-              </div>
-              <div class="item-course">
-                Cours 3
-              </div>
-            </div>
-            <div class="item-playtime">
-              Joué 36 fois.
-            </div>
-          </li>
-          <li (click)="displayItemInformation(4)" [class.selected]="selectedItem === 4" [ngClass]="{'item-clicked': selectedItem === 4}">
-            <div class="item-rank">
-              <h2>4</h2>
-            </div>
-            <img class="icon" src="/assets/memory%20(2).png">
-            <div class="item-infos">
-              <div class="item-title">
-                Mini-jeu 4
-              </div>
-              <div class="item-desc">
-                Ceçi est un mini-jeu.
-              </div>
-              <div class="item-course">
-                Cours 2
-              </div>
-            </div>
-            <div class="item-playtime">
-              Joué 5 fois.
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="long-box-right">
-        {{selectedItem}}
+          </ul>
+        </div>
+        <div class="long-box-right">
+          {{selectedItem}}
+        </div>
       </div>
     </div>
 </body>

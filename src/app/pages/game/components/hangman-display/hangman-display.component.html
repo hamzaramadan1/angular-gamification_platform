@@ -1,0 +1,27 @@
+<div *ngIf="mistakesRemaining == 6 && !success">
+  <img src="/assets/plant.png">
+</div>
+<div *ngIf="mistakesRemaining == 5 && !success">
+  <img src="/assets/plant1.png">
+</div>
+<div *ngIf="mistakesRemaining == 4 && !success">
+  <img src="/assets/plant2.png">
+</div>
+<div *ngIf="mistakesRemaining == 3 && !success">
+  <img src="/assets/plant3.png">
+</div>
+<div *ngIf="mistakesRemaining == 2 && !success">
+  <img src="/assets/plant4.png">
+</div>
+<div *ngIf="mistakesRemaining == 1 && !success">
+  <img src="/assets/plant5.png">
+</div>
+<div class="man-bounce" *ngIf="mistakesRemaining == 0 && !success">
+  <img style="margin-bottom: 3vh;" src="/assets/plant6.png">
+</div>
+<!--end man group-->
+<div class="man-bounce" *ngIf="success">
+  <img style="margin-bottom: 3vh;" src="/assets/tree.jpg">
+</div>
+<!--end happy group-->
+<div class="mistakes-count">Mistakes Remaining : {{ mistakesRemaining }}</div>

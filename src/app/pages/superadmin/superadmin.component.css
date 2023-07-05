@@ -55,3 +55,34 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.searchbar {
+  border-radius: 0px;
+  border-right: 0;
+  border-left: 0;
+  border-top: 0;
+  padding: 2vh;
+}
+
+::placeholder {
+  color: white;
+}
+
+.sort-button {
+  background-color: #383856;
+  color: white;
+  border-radius: 10px;
+  padding: 2vh;
+  cursor: pointer;
+}
+
+.sort-button:hover {
+  background-color: #F7F7F7;
+  border: 1px solid #383856;
+  color: #383856;
+}
+
+.sort-button.active {
+  background-color: #FFAC3E;
+  color: #fff;
+}

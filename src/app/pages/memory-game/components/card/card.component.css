@@ -1,0 +1,33 @@
+.card {
+  position: relative;
+  height: 140px;
+  width: 100px;  
+  border: none;
+  cursor: pointer;
+}
+
+.front {
+  position:absolute;
+  left: 0;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+  cursor: default;
+}
+
+.transparent {
+  opacity: 0;
+}
+
+.back {  
+  border: 1px solid #00548b;
+  height: 140px;
+  width: 100px;     
+  position:absolute;
+  left: 0;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}

@@ -12,36 +12,39 @@
            *ngIf="currentUser.role === 'USER'" [routerLink]="['/profile']">Accueil</a>
         <a routerLinkActive="active" class="nav-link"
            *ngIf="currentUser.role === 'ADMIN'" [routerLink]="['/admin']">Accueil</a>
+           <a routerLinkActive="active" class="nav-link"
+           *ngIf="currentUser.role === 'SUPERADMIN'" [routerLink]="['/admin']">Accueil</a>
       </li>
       <li class="nav-item">
         <a routerLinkActive="active" class="nav-link"
            *ngIf="currentUser.role === 'USER'" [routerLink]="['/edit-user']">Profil</a>
         <a routerLinkActive="active" class="nav-link"
            *ngIf="currentUser.role === 'ADMIN'" [routerLink]="['/edit-user']">Profil</a>
+           <a routerLinkActive="active" class="nav-link"
+           *ngIf="currentUser.role === 'SUPERADMIN'" [routerLink]="['/edit-user']">Profil</a>
       </li>
       <li class="nav-item">
         <a routerLinkActive="active" class="nav-link"
            *ngIf="currentUser.role === 'USER'" [routerLink]="['/courses']">Cours</a>
         <a routerLinkActive="active" class="nav-link"
            *ngIf="currentUser.role === 'ADMIN'" [routerLink]="['/courses']">Cours</a>
+        <a routerLinkActive="active" class="nav-link"
+           *ngIf="currentUser.role === 'SUPERADMIN'" [routerLink]="['/courses']">Cours</a>
       </li>
       <li class="nav-item">
         <a routerLinkActive="active" class="nav-link"
-           *ngIf="currentUser.role === 'ADMIN'" [routerLink]="['/404']">Mini-jeux</a>
+           *ngIf="currentUser.role === 'SUPERADMIN'" [routerLink]="['/superadmin']">Superadmin</a>
       </li>
-      <li class="ms-auto" style="display: flex;">
-        <form class="form-inline d-flex" *ngIf="currentUser.role === 'USER'">
-          <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+      <li class="ms-auto" style="display: flex; align-items: center;">
+        <div class="nav-item">
+          <p style="margin: 0; color: white;">Bonjour, {{currentUser.username}} !</p>
+        </div>
         <div class="nav-item">
           <a (click)="logOut()" routerLinkActive="active" class="nav-link" style="cursor:pointer;">
             <fa-icon [icon]="faArrowRightToBracket" style="font-size: 15px;"></fa-icon>
           </a>
         </div>
-      </li>
+      </li>      
     </ul>
   </div>
 </nav>
-
-<router-outlet></router-outlet>

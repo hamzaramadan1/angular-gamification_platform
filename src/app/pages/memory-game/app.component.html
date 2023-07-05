@@ -1,0 +1,51 @@
+<app-navbar></app-navbar>
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center" style="width: 80vw; margin-top: 10vh" *ngIf="!gameLost && !gameWon;">
+  <div class="row">
+    <div class="col">
+      <h3 class="text-center pb-3">Memory game</h3>
+    </div>    
+  </div>
+  <div *ngIf="cards.length > 0" class="card-row">
+    <app-card class="card-wrapper" *ngFor="let card of cards" [card]="card" (clicked)="handleCardClick($event)"></app-card>
+  </div>
+  <div>
+  </div>
+  <div class="row mt-4">
+      <div class="col-12" *ngIf="unsolved > 0">
+        <div class="text-center">
+          Remaining unsolved pairs: {{unsolved}}
+        </div>
+      </div> 
+      <div class="col-12" *ngIf="clicks == 1">
+        <div class="text-center">
+          You have clicked {{clicks}} time / {{maxClicks}} times
+        </div>
+      </div>
+      <div class="col-12" *ngIf="clicks > 1">
+        <div class="text-center">
+          You have clicked {{clicks}} times / {{maxClicks}} times
+        </div>
+      </div>
+  </div>  
+</div>
+
+<div *ngIf="gameLost">
+  <div class="centered">
+    <h1 style="color: red;">GAME OVER</h1>
+    <p>Vous avez atteint le nombre maximal de clics ({{maxClicks}} clics)</p>
+    <button class="btn" [routerLink]="['/courses']" style="background-color:#383856; color: white; margin: 2vh">Retourner vers les cours</button>
+    <button class="btn" (click)="refreshPage()" style="background-color:#383856; color: white; margin: 2vh">Rejouer</button>
+  </div>
+</div>
+
+<div *ngIf="gameWon">
+  <div class="centered">
+    <h1 style="color: rgb(75,174,79);">GAME WON</h1>
+    <p>Vous avez terminé le mini-jeu en {{clicks}} clics</p>
+    <p>Your Score: {{userScore}}</p>
+    <p *ngIf="userHighscore < userScore">Votre ancien highscore: {{userHighscore}}</p>
+    <p *ngIf="userHighscore >= userScore">Your highscore: {{userHighscore}}</p>
+    <button class="btn" [routerLink]="['/courses']" style="background-color:#383856; color: white; margin: 2vh">Retourner vers les cours</button>
+    <button class="btn" (click)="refreshPage()" style="background-color:#383856; color: white; margin: 2vh">Rejouer</button>
+  </div>
+</div>

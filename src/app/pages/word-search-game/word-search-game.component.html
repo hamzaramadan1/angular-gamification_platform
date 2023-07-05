@@ -1,0 +1,58 @@
+<app-navbar></app-navbar>
+
+<div class="container" *ngIf="!gameLost && !gameWon;">
+    <div class="left-section">
+        <div class="word-search">
+          <table>
+            <tbody>
+              <tr *ngFor="let row of grid">
+                <td [style.background-color]="foundWords.includes(cell.id) ? 'rgb(75,174,79)' : 'white'" [style.color]="foundWords.includes(cell.id) ? 'white' : 'black'" *ngFor="let cell of row">{{ cell.value }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="right-section">
+        <div class="word-list">
+          <h2>Questions</h2>
+          <ul>
+            <li *ngFor="let word of wordSearchQuestions; index as i">Question {{i+1}} : {{ word }}</li>
+          </ul>
+        </div>
+        <div class="user-input" style="position: relative;">
+          <br>
+          <h4>Enter a word:</h4>
+          <div class="input-group">
+            <input style="border-radius: 5px 0 0 5px; border: solid 1px; border-color: #c9c9c9" type="text" [(ngModel)]="userInput" (keyup.enter)="checkWord()" placeholder="Enter a word">
+            <button class="btn btn-primary" (click)="checkWord()">Check</button>
+          </div>
+          <div style="margin-top: 1vh;">Tries : {{tries}}</div>
+          <div *ngIf="currentWordSearchAnswer">
+            <div *ngIf="correct" style="position: absolute; margin-top: 1vh; top: 20vh; color:rgb(75,174,79); display: flex; align-items: center;">Correct : {{currentWordSearchAnswer}} !&nbsp;&nbsp;&nbsp;<img style="height: 4vh" src="../assets/check-mark.png"></div>
+            <div *ngIf="!correct" style="position: absolute; margin-top: 1vh; top: 20vh; color: red; display: flex; align-items: center;">Faux : {{currentWordSearchAnswer}} !&nbsp;&nbsp;&nbsp;<img style="height: 4vh" src="../assets/close.png"></div>
+          </div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="gameLost">
+  <div class="centered">
+    <h1 style="color: red;">GAME OVER</h1>
+    <p>Vous avez atteint le nombre maximal d'essais</p>
+    <button class="btn" [routerLink]="['/courses']" style="background-color:#383856; color: white; margin: 2vh">Retourner vers les cours</button>
+    <button class="btn" (click)="refreshPage()" style="background-color:#383856; color: white; margin: 2vh">Rejouer</button>
+  </div>
+</div>
+
+<div *ngIf="gameWon">
+  <div class="centered">
+    <h1 style="color: rgb(75,174,79);">GAME WON</h1>
+    <p>Your Score: {{userScore}}</p>
+    <p *ngIf="userHighscore < userScore">Votre ancien highscore: {{userHighscore}}</p>
+    <p *ngIf="userHighscore >= userScore">Your highscore: {{userHighscore}}</p>
+    <button class="btn" [routerLink]="['/courses']" style="background-color:#383856; color: white; margin: 2vh">Retourner vers les cours</button>
+    <button class="btn" (click)="refreshPage()" style="background-color:#383856; color: white; margin: 2vh">Rejouer</button>
+  </div>
+</div>

@@ -33,4 +33,8 @@ export class CourseService extends RequestBaseService {
     formData.append("file", file, file.toString());
     return this.http.post(API_URL + '/create', formData, {headers: this.getMultiPartHeaders});
   }
+
+  deleteCourse(id: number): Observable<any> {
+    return this.http.delete(API_URL + '/delete/' + id, {headers: this.getHeaders});
+  }
 }

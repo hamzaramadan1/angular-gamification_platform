@@ -29,8 +29,20 @@ export class UserService extends RequestBaseService {
     return this.http.get(API_URL + "/user/courses/all", {headers: this.getHeaders});
   }
 
+  findAllCoursesCount(): Observable<any> {
+    return this.http.get(API_URL + "/user/courses/allCount", {headers: this.getHeaders});
+  }
+
   findAllMinigamesForCourse(courseId: number): Observable<any> {
     return this.http.get(API_URL + "/user/minigames/" + courseId, {headers: this.getHeaders});
+  }
+
+  findAllMemoryGamesForCourse(courseId: number): Observable<any> {
+    return this.http.get(API_URL + "/user/memoryGames/" + courseId, {headers: this.getHeaders});
+  }
+
+  findAllPuzzleGamesForCourse(courseId: number): Observable<any> {
+    return this.http.get(API_URL + "/user/puzzleGames/" + courseId, {headers: this.getHeaders});
   }
 
   findAllUsersUsersCount(): Observable<any> {
@@ -45,5 +57,13 @@ export class UserService extends RequestBaseService {
     const formData: FormData = new FormData();
     formData.append("userImageFile", userImageFile, userImageFile.toString());
     return this.http.put(API_URL + '/update/updateProfilePic', formData, {headers: this.getMultiPartHeaders});
+  }
+
+  getFirstThreeUsersWithHighestExperiencePoints(): Observable<any> {
+    return this.http.get(API_URL + '/user/getFirstThreeUsersWithHighestExperiencePoints', {headers: this.getHeaders});
+  }
+  
+  getUsersWithHighestExperiencePoints(): Observable<any> {
+    return this.http.get(API_URL + '/user/getUsersWithHighestExperiencePoints', {headers: this.getHeaders});
   }
 }

@@ -1,0 +1,9 @@
+<div class="card mb-4">
+  <div class="back d-flex justify-content-center">
+  </div>
+  <div style="height: 140px; width: 100px; padding-left: 1vh; padding-right: 1vh; display: flex; align-items: center; justify-content: center;" [style.background]="card.color" [ngClass]="this.card.revealed ? 'front' : 'transparent'" (click)="cardClick()">
+    <div style="max-height: 100%; max-width: 100%; overflow: hidden; text-overflow: ellipsis;">
+      {{this.card.cardContent}}
+    </div>
+  </div>
+</div>

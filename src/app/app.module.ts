@@ -19,6 +19,18 @@ import { NavbarComponent } from './pages/navbar/navbar.component';
 import { EditUserComponent } from './pages/edit-user/edit-user.component';
 import { CoursesComponent } from './pages/courses/courses.component';
 import { CourseDetailsComponent } from './pages/course-details/course-details.component';
+import { HangmanDisplayComponent } from './pages/game/components/hangman-display/hangman-display.component';
+import { HangmanKeyboardComponent } from './pages/game/components/hangman-keyboard/hangman-keyboard.component';
+import { HangmanQuestionComponent } from './pages/game/components/hangman-question/hangman-question.component';
+import { HangmanComponent } from './pages/game/components/hangman/hangman.component';
+import { HangComponent } from './pages/game/app.component';
+import { CardComponent } from './pages/memory-game/components/card/card.component';
+import { CaComponent } from './pages/memory-game/app.component';
+import { CardService } from './pages/memory-game/services/card.service';
+import { WordSearchGameComponent } from './pages/word-search-game/word-search-game.component';
+import { WordSearchService } from './services/wordSearch.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +45,16 @@ import { CourseDetailsComponent } from './pages/course-details/course-details.co
     NavbarComponent,
     EditUserComponent,
     CoursesComponent,
-    CourseDetailsComponent
+    CourseDetailsComponent,
+    HangmanComponent,
+    HangmanDisplayComponent,
+    HangmanKeyboardComponent,
+    HangmanQuestionComponent,
+    HangComponent,
+    CardComponent,
+    CaComponent,
+    AppComponent,
+    WordSearchGameComponent,
   ],
     imports: [
         BrowserModule,
@@ -42,9 +63,11 @@ import { CourseDetailsComponent } from './pages/course-details/course-details.co
         HttpClientModule,
         FormsModule,
         SweetAlert2Module,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        BrowserAnimationsModule
+
     ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders, CardService, WordSearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

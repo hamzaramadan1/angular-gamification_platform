@@ -1,12 +1,17 @@
 <app-navbar></app-navbar>
-<h1>This is a superadmin</h1>
 <div class="container">
   <div class="pt-5">
 
 
     <div class="card">
       <div class="card-header">
-        <h3>All Users</h3>
+        <h3>Tous les utilisateurs</h3>
+      </div>
+      <input style="background-color: rgb(56,56,86); color: white; border-radius: 30px; width: 50%; margin-left: 25%; margin-right: 25%; margin-top: 2vh;" class="searchbar form-control mr-2" type="search" placeholder="Rechercher un utilisateur..." aria-label="Search" name="searchQuery" [(ngModel)]="searchQuery">
+      <div style="margin-top: 2vh;" class="d-flex justify-content-around">
+        <p style="padding-top: 2vh;">Trier les utilisateurs : </p>
+        <div class="sort-button" [ngClass]="{'active': !reverseSort}" (click)="sortUsersByUsername('asc')">Par nom (A-Z)</div>
+        <div class="sort-button" [ngClass]="{'active': reverseSort}" (click)="sortUsersByUsername('desc')">Par nom (Z-A)</div>
       </div>
 
       <div class="card-body">
@@ -14,39 +19,47 @@
 
           <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Username</th>
+            <th scope="col">Numéro</th>
+            <th scope="col">Nom de compte</th>
             <th scope="col">Role</th>
-            <th scope="col">Detail</th>
+            <th scope="col">Statut</th>
+            <th scope="col">Détails</th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let item of userList; index as ind">
+          <tr *ngFor="let item of sortedUserList; index as ind">
             <th scope="row">{{ind + 1}}</th>
-            <td>{{item.firstName}}</td>
             <td>{{item.username}}</td>
-            <td>{{item.locked ? 'Locked' : 'Unlocked'}}</td>
-            <td>
-              <button class="btn btn-info" (click)="detail(item)">Detail</button>
-            </td>
-            <td>
-              <button class="btn btn-info" (click)="deleteUser(item.id)">Delete</button>
-            </td>
-            <td>
-              <button class="btn btn-info" *ngIf="!item.locked" (click)="lockUser(item.id)">Lock</button>
-              <button class="btn btn-info" *ngIf="item.locked" (click)="unlockUser(item.id)">Unlock</button>
-            <!--</td>
-            <td>
-              <ui-switch [disabled]="isSuperAdmin(item.id)" [checked]="isAdmin(item.id)" (change)="changeRole(item.id)"></ui-switch>
-            </td>-->
             <td>{{item.role}}</td>
+            <td>{{item.locked ? 'Verouillé' : 'Déverouillé'}}</td>
+            <td>
+              <button class="btn btn-info" (click)="detail(item)">Détails</button>
+            </td>
+            <td style="width: 22vh; color: red;">
+              <button [disabled]="isSuperAdmin(item.id)" class="btn btn-info" *ngIf="!item.locked" (click)="lockUser(item.id)">Verouiller</button>
+              <button [disabled]="isSuperAdmin(item.id)" class="btn btn-info" *ngIf="item.locked" (click)="unlockUser(item.id)">Déverouiller</button>
+            </td>
+            <td>
+              <button [disabled]="isSuperAdmin(item.id)" class="btn btn-secondary" *ngIf="isAdmin(item.id)" (click)="changeRole(item.id)">
+                <span style="display: flex; align-items: center;">
+                  Rendre User&nbsp;&nbsp;&nbsp;<img style="height: 3vh;" src="assets/user.png">
+                </span>
+              </button>
+              <button [disabled]="isSuperAdmin(item.id)" class="btn btn-success" *ngIf="!isAdmin(item.id)" (click)="changeRole(item.id)">
+                <span style="display: flex; align-items: center;">
+                  Rendre Admin&nbsp;&nbsp;&nbsp;  <img style="height: 3vh;" src="assets/admin.png">
+                </span>
+              </button>
+            </td>
+            <td>
+              <button [disabled]="isSuperAdmin(item.id)" class="btn btn-danger" (click)="deleteUser(item.id)">
+                <img style="height: 3vh;" src="assets/trash-can.png">
+              </button>
+            </td>
           </tr>
           </tbody>
-
         </table>
       </div>
     </div>
-
   </div>
 </div>

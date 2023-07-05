@@ -59,8 +59,8 @@ export class EditUserComponent implements OnInit {
       );
       if (this.currentUser.role === 'USER') {
         this.router.navigate(['/profile']);
-      } else if (this.currentUser.role === 'ADMIN') {
-        this.router.navigate(['admin']);
+      } else if (this.currentUser.role === 'ADMIN' || this.currentUser.role === 'SUPERADMIN') {
+        this.router.navigate(['/admin']);
       }
     }, error => {
       Swal.fire(
@@ -78,7 +78,11 @@ export class EditUserComponent implements OnInit {
         'Changements réussis.',
         'success'
       );
-      this.router.navigate(['/profile']);
+      if (this.currentUser.role === 'USER') {
+        this.router.navigate(['/profile']);
+      } else if (this.currentUser.role === 'ADMIN') {
+        this.router.navigate(['/admin']);
+      }
     },
       err => {
       if (err?.status === 400) {

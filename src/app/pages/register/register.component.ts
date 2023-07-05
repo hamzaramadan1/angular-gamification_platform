@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
       this.router.navigate(['/login']);
     }, err => {
       if (err?.status === 409) {
-        this.errorMessage = 'Username already exist.';
+        this.errorMessage = 'Username already exists.';
       } else {
         this.errorMessage = 'Unexpected error occurred.';
         console.log(err);

@@ -21,5 +21,23 @@ export class MinigameService extends RequestBaseService {
     return this.http.post(API_URL + "/create/" + courseId, minigame, {headers: this.getHeaders});
   }
 
+  findAllMinigamesForUser(): Observable<any> {
+    return this.http.get(API_URL + "/allForUser", {headers: this.getHeaders});
+  }
 
+  findAllMinigamesForUserCount(): Observable<any> {
+    return this.http.get(API_URL + '/all/count', {headers: this.getHeaders});
+  }
+
+  findAllMinigames(): Observable<any> {
+    return this.http.get(API_URL + "/all", {headers: this.getHeaders});
+  }
+
+  findAllMinigamesCount(): Observable<any> {
+    return this.http.get(API_URL + '/all/allCount', {headers: this.getHeaders});
+  }
+
+  deleteMinigame(id: number): Observable<any> {
+    return this.http.delete(API_URL + '/delete/' + id, {headers: this.getHeaders});
+  }
 }

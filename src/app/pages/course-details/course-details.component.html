@@ -14,5 +14,65 @@
     </div>
   </div>
   <p style="margin-bottom: 7vh">Lien vers le cours : <a href="#">{{selectedCourse.courseLink}}</a></p>
-  <h5 style="font-weight: 700">Mini-jeux du cours</h5>
+  <h5 style="font-weight: 700; margin-bottom: 4vh;">Mini-jeux du cours</h5>
+
+  <div class="minigames-container" *ngFor="let item of minigameList; let i = index">
+    <div class="minigame-container">
+      <div class="minigame-user-record">
+        <span>Record : {{selectedMinigameScores[i]}}
+        </span>
+      </div>
+      <div class="minigame-atts">
+        <div class="minigame-image-container">
+          <img src="assets/plant-icon.png" style="height: 8vh;">
+        </div>
+        <div class="minigame-infos">
+          <p>{{item.description}}</p>
+        </div>
+      </div>
+      <div class="minigame-start">
+        <img src="assets/right-arrow.png" style="height: 4vh; cursor: pointer" (click)="gameDetails(item)">
+      </div>
+    </div>
+  </div>
+
+  <div class="memoryGames-container" *ngFor="let item of memoryGameList; let i = index">
+    <div class="memoryGame-container">
+      <div class="minigame-user-record">
+        <span>Record : {{selectedMemoryGameScores[i]}}
+        </span>
+      </div>
+      <div class="memoryGame-atts">
+        <div class="memoryGame-image-container">
+          <img src="assets/memory.png" style="height: 8vh;">
+        </div>
+        <div class="memoryGame-infos">
+          <p>{{item.description}}</p>
+        </div>
+      </div>
+      <div class="memoryGame-start">
+        <img src="assets/right-arrow.png" style="height: 4vh; cursor: pointer" (click)="memoryGameDetails(item)">
+      </div>
+    </div>
+  </div>
+
+  <div class="puzzleGames-container" *ngFor="let item of puzzleGameList; let i = index">
+    <div class="puzzleGame-container">
+      <div class="minigame-user-record">
+        <span>Record : {{selectedPuzzleGameScores[i]}}
+        </span>
+      </div>
+      <div class="puzzleGame-atts">
+        <div class="puzzleGame-image-container">
+          <img src="assets/crossword.png" style="height: 8vh;">
+        </div>
+        <div class="puzzleGame-infos">
+          <p>{{item.description}}</p>
+        </div>
+      </div>
+      <div class="puzzleGame-start">
+        <img src="assets/right-arrow.png" style="height: 4vh; cursor: pointer" (click)="puzzleGameDetails(item)">
+      </div>
+    </div>
+  </div>
 </div>

@@ -129,12 +129,12 @@ input[type="text"], input[type="password"] {
   display: none;
 }
 
-#userImageFileLabel {
+.userImageFileLabel {
   cursor: pointer;
   background-color: #FFAC3E;
   border-radius: 15px;
   color: white;
   display: table;
-  margin: auto;
-  padding: 2vh;
+  margin: 2.7vh auto;
+  padding: 0.5vh 2vh;
 }

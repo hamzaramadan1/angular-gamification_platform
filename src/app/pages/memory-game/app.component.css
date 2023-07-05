@@ -1,0 +1,22 @@
+.container {
+  max-width: 800px;
+  margin: 40px
+}
+
+.card-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-wrapper {
+  flex-basis: 20%; /* Adjust as needed */
+  /* Add other styles for spacing, margins, etc. */
+}
+
+.centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

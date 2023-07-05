@@ -11,7 +11,7 @@
       </div>
       <div class="profile-info" style="text-transform: capitalize">
         <h1>{{currentUser.firstName}} {{currentUser.lastName}}</h1>
-        <p>Débutant</p>
+        <p>{{currentUser.grade}}</p>
       </div>
     </div>
     <div class="experience-points">
@@ -55,7 +55,7 @@
         <div class="activity-stat">
           <img class="activity-stat-image icon" src="/assets/podium.png">
           <div class="activity-stat-data">
-            <p class="activity-stat-data-number">4</p>
+            <p class="activity-stat-data-number">{{getUserIndex(firstAllUsers, currentUser.username)+1}}</p>
             <p class="activity-stat-data-title">Classement</p>
           </div>
         </div>
@@ -78,33 +78,42 @@
   <div class="classement">
     <h2 class="classement-title">Classement <img class="icon" style="margin-top: -25px" src="/assets/podium%20(1).png"></h2>
     <div class="classement-container">
-      <div class="classement-container-rank-1-crown">
-        <img class="icon" src="/assets/king.png">
+      <div class="rank-1">
+        <div class="classement-container-rank-1-crown">
+          <img class="icon" src="/assets/king.png">
+        </div>
+        <div class="classement-container-rank-1-image">
+          <img *ngIf="firstThreeUsers[0].userImageName == null" src="https://i.stack.imgur.com/34AD2.jpg">
+          <img *ngIf="firstThreeUsers[0].userImageName !== null" src="assets/user_images/{{firstThreeUsers[0].userImageName}}">
+        </div>
+        <p class="classement-container-rank-1-image-name">{{firstThreeUsers[0].firstName}} {{firstThreeUsers[0].lastName}}</p>
+        <div class="classement-container-rank-1-level"> Lv. {{firstThreeUsers[0].userLevel}}</div>
+        <div class="classement-container-rank-1-points"> {{firstThreeUsers[0].experiencePoints}} <img style="height: 15px; margin-top: -5px" src="/assets/star%20(2).png"></div>
       </div>
-      <div class="classement-container-rank-1-image">
-        <img src="https://i.stack.imgur.com/34AD2.jpg">
+      <div *ngIf="firstThreeUsers.length > 1" class="rank-2">
+        <div class="classement-container-rank-2-crown">
+          <img style="height: 40px" src="/assets/two.png">
+        </div>
+        <div class="classement-container-rank-2-image">
+          <img *ngIf="firstThreeUsers[1].userImageName == null" src="https://i.stack.imgur.com/34AD2.jpg">
+          <img *ngIf="firstThreeUsers[1].userImageName !== null" src="assets/user_images/{{firstThreeUsers[1].userImageName}}">
+        </div>
+        <p class="classement-container-rank-2-image-name">{{firstThreeUsers[1].firstName}} {{firstThreeUsers[1].lastName}}</p>
+        <div class="classement-container-rank-2-level"> Lv. {{firstThreeUsers[1].userLevel}}</div>
+        <div class="classement-container-rank-2-points"> {{firstThreeUsers[1].experiencePoints}} <img style="height: 15px; margin-top: -5px" src="/assets/star%20(2).png"></div>
       </div>
-      <p class="classement-container-rank-1-image-name">{{currentUser.firstName}} {{currentUser.lastName}}</p>
-      <div class="classement-container-rank-1-level"> Lv. {{currentUser.userLevel}}</div>
-      <div class="classement-container-rank-1-points"> {{currentUser.experiencePoints}} <img style="height: 15px; margin-top: -5px" src="/assets/star%20(2).png"></div>
-      <div class="classement-container-rank-2-crown">
-        <img style="height: 40px" src="/assets/two.png">
+      <div *ngIf="firstThreeUsers.length > 2" class="rank-3">
+        <div class="classement-container-rank-3-crown">
+          <img style="height: 40px" src="/assets/3.png">
+        </div>
+        <div class="classement-container-rank-3-image">
+          <img *ngIf="firstThreeUsers[2].userImageName == null" src="https://i.stack.imgur.com/34AD2.jpg">
+          <img *ngIf="firstThreeUsers[2].userImageName !== null" src="assets/user_images/{{firstThreeUsers[2].userImageName}}">
+        </div>
+        <p class="classement-container-rank-3-image-name">{{firstThreeUsers[2].firstName}} {{firstThreeUsers[2].lastName}}</p>
+        <div class="classement-container-rank-3-level"> Lv. {{firstThreeUsers[2].userLevel}}</div>
+        <div class="classement-container-rank-3-points"> {{firstThreeUsers[2].experiencePoints}} <img style="height: 15px; margin-top: -5px" src="/assets/star%20(2).png"></div>
       </div>
-      <div class="classement-container-rank-2-image">
-        <img src="https://i.stack.imgur.com/34AD2.jpg">
-      </div>
-      <p class="classement-container-rank-2-image-name">{{currentUser.firstName}} {{currentUser.lastName}}</p>
-      <div class="classement-container-rank-2-level"> Lv. {{currentUser.userLevel}}</div>
-      <div class="classement-container-rank-2-points"> 3600 <img style="height: 15px; margin-top: -5px" src="/assets/star%20(2).png"></div>
-      <div class="classement-container-rank-3-crown">
-        <img style="height: 40px" src="/assets/3.png">
-      </div>
-      <div class="classement-container-rank-3-image">
-        <img src="https://i.stack.imgur.com/34AD2.jpg">
-      </div>
-      <p class="classement-container-rank-3-image-name">{{currentUser.firstName}} {{currentUser.lastName}}</p>
-      <div class="classement-container-rank-3-level"> Lv. {{currentUser.userLevel}}</div>
-      <div class="classement-container-rank-3-points"> 3600 <img style="height: 15px; margin-top: -5px" src="/assets/star%20(2).png"></div>
     </div>
   </div>
 </div>

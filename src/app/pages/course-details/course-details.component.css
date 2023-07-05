@@ -18,3 +18,101 @@
   margin-top: 3vh;
   margin-bottom: 4vh;
 }
+
+.minigame-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #cccccc;
+  padding-left: 2vh;
+  padding-right: 2vh;
+  border-radius: 15px;
+  margin-bottom: 3vh;
+  width: 100%;
+}
+
+.memoryGame-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #cccccc;
+  padding-left: 2vh;
+  padding-right: 2vh;
+  border-radius: 15px;
+  margin-bottom: 3vh;
+  width: 100%;
+}
+
+.puzzleGame-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #cccccc;
+  padding-left: 2vh;
+  padding-right: 2vh;
+  border-radius: 15px;
+  margin-bottom: 3vh;
+  width: 100%;
+}
+
+.minigame-user-record {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  top: -2vh;
+  color: white;
+}
+
+.minigame-user-record span {
+  background-color: #00ED5F;
+  border-radius: 15px;
+  padding: 0.5vh 1vh;
+}
+
+.minigame-atts {
+  display: flex;
+  align-items: center;
+  margin-top: 2vh;
+}
+
+.memoryGame-atts {
+  display: flex;
+  align-items: center;
+  margin-top: 2vh;
+}
+
+.puzzleGame-atts {
+  display: flex;
+  align-items: center;
+  margin-top: 2vh;
+}
+
+.minigame-infos {
+  margin-left: 2vh;
+}
+
+.memoryGame-infos {
+  margin-left: 2vh;
+}
+
+.puzzleGame-infos {
+  margin-left: 2vh;
+}
+
+.minigame-start {
+  display: flex;
+  align-items: center;
+}
+
+.memoryGame-start {
+  display: flex;
+  align-items: center;
+}
+
+.puzzleGame-start {
+  display: flex;
+  align-items: center;
+}

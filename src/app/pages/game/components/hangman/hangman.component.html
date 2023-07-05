@@ -1,0 +1,39 @@
+<ng-container *ngIf="!gameOver && !gameWon;">
+  <div class="hangman">
+    <p style="margin: 0;">{{questionText}}</p>
+    <app-hangman-display (gameFinished)="onGameFinished($event)" [guesses]="guesses" [question]="question"></app-hangman-display>
+    <ng-container *ngIf="!restartGameBtnShown else restartGameBtn">
+      <app-hangman-question [guesses]="guesses" [question]="question"></app-hangman-question>
+      <app-hangman-keyboard (keyPressed)="guess($event)" [question]="question"></app-hangman-keyboard>
+    </ng-container>
+  </div>
+  <ng-template #restartGameBtn>
+    <button class="btn" (click)="reset()" style="background-color:#383856; color: white; margin: 2vh">
+      {{buttonText}}
+    </button>
+  </ng-template>
+</ng-container>
+
+<div *ngIf="gameOver">
+  <div class="game-over centered">
+    <h1 style="color: red;">GAME OVER</h1>
+    <p>Your Score: {{score}}</p>
+    <p>Your score rate: {{scoreRate}} %</p>
+    <p *ngIf="userHighscore < score">Votre ancien highscore: {{userHighscore}}</p>
+    <p *ngIf="userHighscore >= score">Your highscore: {{userHighscore}}</p>
+    <button class="btn" [routerLink]="['/courses']" style="background-color:#383856; color: white; margin: 2vh">Retourner vers les cours</button>
+    <button class="btn" (click)="refreshPage()" style="background-color:#383856; color: white; margin: 2vh">Rejouer</button>
+  </div>
+</div>
+
+<div *ngIf="gameWon">
+  <div class="game-over centered">
+    <h1 style="color: rgb(75,174,79);">GAME WON</h1>
+    <p>Your Score: {{score}}</p>
+    <p>Your score rate: {{scoreRate}} %</p>
+    <p *ngIf="userHighscore < score">Votre ancien highscore: {{userHighscore}}</p>
+    <p *ngIf="userHighscore >= score">Your highscore: {{userHighscore}}</p>
+    <button class="btn" [routerLink]="['/courses']" style="background-color:#383856; color: white; margin: 2vh">Retourner vers les cours</button>
+    <button class="btn" (click)="refreshPage()" style="background-color:#383856; color: white; margin: 2vh">Rejouer</button>
+  </div>
+</div>

@@ -1,3 +1,4 @@
+import { Grade } from "./grade.enum";
 import {Role} from "./role.enum";
 
 export class User {
@@ -16,6 +17,7 @@ export class User {
   userLevel: number | undefined;
   accessToken: string = '';
   refreshToken: string = '';
-  role: Role = Role.USER
+  role: Role = Role.USER;
+  grade: Grade = Grade.DEBUTANT;
   locked: boolean|undefined;
 }

@@ -160,6 +160,7 @@
   align-items: center;
   padding-top: 1vh;
   padding-bottom: 2vh;
+  cursor: pointer;
 }
 
 .course-container-image {
@@ -209,9 +210,9 @@
   position: absolute;
   font-weight: 700;
   text-transform: capitalize;
-  font-size: 12px;
+  font-size: 1.5vh;
   top: 115px;
-  left: 120px;
+  left: 130px;
 }
 
 .classement-container-rank-1-level {
@@ -258,9 +259,9 @@
   position: absolute;
   font-weight: 700;
   text-transform: capitalize;
-  font-size: 12px;
+  font-size: 1.5vh;
   top: 145px;
-  left: 0px;
+  left: 10px;
 }
 
 .classement-container-rank-2-level {
@@ -307,9 +308,9 @@
   position: absolute;
   font-weight: 700;
   text-transform: capitalize;
-  font-size: 12px;
+  font-size: 1.5vh;
   top: 145px;
-  left: 240px;
+  left: 245px;
 }
 
 .classement-container-rank-3-level {

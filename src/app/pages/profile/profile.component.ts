@@ -16,6 +16,8 @@ export class ProfileComponent implements OnInit {
   errorMessage: string = "";
   selectedFile: File | undefined;
   courseList: Array<Course> = [];
+  firstThreeUsers: Array<User> = [];
+  firstAllUsers: Array<User> = []
 
   constructor(private userService: UserService,
               private authenticationService: AuthenticationService,
@@ -29,6 +31,23 @@ export class ProfileComponent implements OnInit {
     this.userService.findAllCourses().subscribe(data => {
       this.courseList = data;
     });
+    this.userService.getFirstThreeUsersWithHighestExperiencePoints().subscribe(data => {
+      this.firstThreeUsers = data;
+      console.log(data);
+    });
+    this.userService.getUsersWithHighestExperiencePoints().subscribe(data => {
+      this.firstAllUsers = data;
+      console.log(data);
+    });
+  }
+
+  getUserIndex(firstAllUsers, username: string): number {
+    for (let index = 0; index < firstAllUsers.length; index++) {
+      if (firstAllUsers[index].username === username) {
+        return index;
+      }
+    }
+    return -1;
   }
 
   goToSelectedCourse(selectedCourse: Course) {
@@ -46,17 +65,11 @@ export class ProfileComponent implements OnInit {
   }
 
   getRemainingExperience() {
-    // @ts-ignore
-    return this.currentUser.userLevel*1000 - this.currentUser.experiencePoints;
+    return ((this.currentUser.userLevel * 1000) + (this.currentUser.userLevel * 100 * this.currentUser.userLevel)) - this.currentUser.experiencePoints;
   }
 
   get experiencePercentage(): number {
-    if (this.currentUser.userLevel && this.currentUser.experiencePoints) {
-      return (100 * this.currentUser.experiencePoints) / (this.currentUser.userLevel * 1000);
-    }
-    else {
-      return 0;
-    }
+    return (((this.currentUser.experiencePoints - (((this.currentUser.userLevel-1) * 1000) + ((this.currentUser.userLevel-1) * 100 * (this.currentUser.userLevel-1)))) / (((this.currentUser.userLevel * 1000) + (this.currentUser.userLevel * 100 * this.currentUser.userLevel)) - (((this.currentUser.userLevel-1) * 1000) + ((this.currentUser.userLevel-1) * 100 * (this.currentUser.userLevel-1))))) * 100);
   }
 
   onSubmit() {
