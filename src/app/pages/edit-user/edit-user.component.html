@@ -3,14 +3,14 @@
 <div class="left">
   <h1>Profile</h1>
   <p *ngIf="currentUser.role === 'USER'" class="user-level"><span>Lv. {{currentUser.userLevel}}</span></p>
-  <img class="profilePic" *ngIf="currentUser.userImageName !== null" src="assets/user_images/{{currentUser.userImageName}}" style="border: 5px solid white;">
+  <img class="profilePic" *ngIf="currentUser.userImageName !== null" [src]="decodedImage" style="border: 5px solid white;">
   <img class="profilePic" *ngIf="currentUser.userImageName == null" src="https://i.stack.imgur.com/34AD2.jpg" alt="User profile image" style="border: 5px solid white;">
   <p class="user-name" style="text-transform: capitalize">{{currentUser.firstName}} {{currentUser.lastName}}</p>
   <p class="user-grade">{{currentUser.grade}}</p>
   <form #fl="ngForm" (ngSubmit)="fl.form.valid && updateProfilePic()">
     <div class="form-group" style="position: relative;">
-      <label *ngIf="!currentUser.userImageFile || !currentUser.userImageFile.name" class="userImageFileLabel" for="userImageFile"><img src="assets/photo.png" style="height: 30px; width: auto">Télécharger une nouvelle image</label>
-      <label *ngIf="currentUser.userImageFile && currentUser.userImageFile.name" class="userImageFileLabel" for="userImageFile"><img src="assets/photo.png" style="height: 30px; width: auto">{{currentUser.userImageFile.name}}</label> 
+      <label *ngIf="!this.imageFile?.name" class="userImageFileLabel" for="userImageFile"><img src="assets/photo.png" style="height: 30px; width: auto">Télécharger une nouvelle image</label>
+      <label *ngIf="this.imageFile?.name " class="userImageFileLabel" for="userImageFile"><img src="assets/photo.png" style="height: 30px; width: auto">{{imageFile.name}}</label> 
       <div class="position-relative">
         <input
           type="file"

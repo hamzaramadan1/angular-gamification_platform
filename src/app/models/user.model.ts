@@ -11,7 +11,7 @@ export class User {
   confirmPassword: string = '';
   profilePicturePath: string = '';
   experiencePoints: number | undefined;
-  userImageFile!: File;
+  userImageFile!: File | string;
   userImageName!: string;
   userImageType!: string;
   userLevel: number | undefined;

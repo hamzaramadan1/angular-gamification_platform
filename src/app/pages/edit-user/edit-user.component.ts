@@ -5,6 +5,7 @@ import {AuthenticationService} from "../../services/authentication.service";
 import Swal from 'sweetalert2';
 import {Router} from "@angular/router";
 import {Course} from "../../models/course.model";
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-user',
@@ -20,30 +21,45 @@ export class EditUserComponent implements OnInit {
   firstNamePattern = "^[a-zA-Z'’]{2,30}$"
   lastNamePattern = "^[a-zA-Z'’]{2,30}$";
   emailPattern = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+  decodedImage: any = '';
+  imageFile: File;
 
   constructor(private userService: UserService,
               private authenticationService: AuthenticationService,
-              private router: Router) {
+              private router: Router,
+              private sanitizer: DomSanitizer
+              ) {
   }
 
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(data => {
       this.currentUser = data;
+      
+      // Check if userImageFile is not null before processing it
+      if (this.currentUser.userImageFile) {
+        const base64String = this.currentUser.userImageFile as string;
+        const byteArray = Uint8Array.from(atob(base64String), c => c.charCodeAt(0));
+        const blob = new Blob([byteArray], { type: 'image/png' });
+
+        let objectURL = URL.createObjectURL(blob);
+        this.decodedImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      }
     });
   }
+  
 
   onFileSelected(event: Event): void {
     const target = event.target as HTMLInputElement;
-    const file = target.files?.[0] || null;
-    if (file) {
+    this.imageFile = target.files?.[0] || null;
+    if (this.imageFile) {
       const reader = new FileReader();
       reader.onload = () => {
         const base64 = reader.result?.toString();
         if (base64) {
-          this.currentUser.userImageFile = file;
+          this.currentUser.userImageFile = this.imageFile;
         }
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(this.imageFile);
     }
     else {
       console.log('file not present');
@@ -51,7 +67,7 @@ export class EditUserComponent implements OnInit {
   }
 
   updateProfilePic() {
-    this.userService.updateProfilePic(this.currentUser.userImageFile).subscribe((data: User) => {
+    this.userService.updateProfilePic(this.currentUser.userImageFile as File).subscribe((data: User) => {
       Swal.fire(
         'Succès !',
         'Photo de profil changée avec succès.',
