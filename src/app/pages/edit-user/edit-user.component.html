@@ -3,8 +3,8 @@
 <div class="left">
   <h1>Profile</h1>
   <p *ngIf="currentUser.role === 'USER'" class="user-level"><span>Lv. {{currentUser.userLevel}}</span></p>
-  <img class="profilePic" *ngIf="currentUser.userImageName !== null" [src]="decodedImage" style="border: 5px solid white;">
-  <img class="profilePic" *ngIf="currentUser.userImageName == null" src="https://i.stack.imgur.com/34AD2.jpg" alt="User profile image" style="border: 5px solid white;">
+  <img class="profilePic" *ngIf="currentUser.userImageFile !== null" [src]="getUserImageURL(currentUser)" style="border: 5px solid white;">
+  <img class="profilePic" *ngIf="currentUser.userImageFile == null" src="https://i.stack.imgur.com/34AD2.jpg" alt="User profile image" style="border: 5px solid white;">
   <p class="user-name" style="text-transform: capitalize">{{currentUser.firstName}} {{currentUser.lastName}}</p>
   <p class="user-grade">{{currentUser.grade}}</p>
   <form #fl="ngForm" (ngSubmit)="fl.form.valid && updateProfilePic()">

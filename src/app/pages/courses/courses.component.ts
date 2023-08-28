@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 import { MemoryGameService } from 'src/app/services/memoryGame.service';
 import { PuzzleGameService } from 'src/app/services/puzzleGame.service';
 import { MinigameService } from 'src/app/services/minigame.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-courses',
@@ -53,7 +54,8 @@ export class CoursesComponent implements OnInit {
               private minigameService: MinigameService,
               private memoryGameService: MemoryGameService,
               private puzzleGameService: PuzzleGameService,
-              private router: Router) {
+              private router: Router,
+              private sanitizer: DomSanitizer) {
   }
 
   ngOnInit(): void {
@@ -86,6 +88,31 @@ export class CoursesComponent implements OnInit {
 
   public sortCoursesByName(sortDirection: 'asc' | 'desc'): void {
     this.reverseSort = sortDirection === 'desc';
+  }
+
+  getUserImageURL(user: User): SafeUrl | undefined {
+    if (user.userImageFile) {
+      const base64String = user.userImageFile as string;
+      const byteArray = Uint8Array.from(atob(base64String), c => c.charCodeAt(0));
+      const blob = new Blob([byteArray], { type: 'image/png' });
+
+      let objectURL = URL.createObjectURL(blob);
+      return this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    }
+
+    return undefined;
+  } 
+
+  getCourseImageURL(course: Course): SafeUrl | undefined {
+    if (course.file) {
+      const base64String = course.file as string;
+      const byteArray = Uint8Array.from(atob(base64String), c => c.charCodeAt(0));
+      const blob = new Blob([byteArray], { type: 'image/png' });
+
+      let objectURL = URL.createObjectURL(blob);
+      return this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    }
+    return undefined;
   }
 
   // checkAnswer(userAnswer: string, minigameId: number, index: number) {

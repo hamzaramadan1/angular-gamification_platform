@@ -4,6 +4,8 @@ import {UserService} from "../../services/user.service";
 import {AuthenticationService} from "../../services/authentication.service";
 import {Course} from "../../models/course.model";
 import {Router} from "@angular/router";
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-profile',
@@ -17,17 +19,20 @@ export class ProfileComponent implements OnInit {
   selectedFile: File | undefined;
   courseList: Array<Course> = [];
   firstThreeUsers: Array<User> = [];
-  firstAllUsers: Array<User> = []
+  firstAllUsers: Array<User> = [];
+  imageFile: File;
 
   constructor(private userService: UserService,
               private authenticationService: AuthenticationService,
-              private router: Router) {
+              private router: Router,
+              private sanitizer: DomSanitizer) {
   }
 
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(data => {
       this.currentUser = data;
     });
+
     this.userService.findAllCourses().subscribe(data => {
       this.courseList = data;
     });
@@ -39,6 +44,30 @@ export class ProfileComponent implements OnInit {
       this.firstAllUsers = data;
       console.log(data);
     });
+  }
+
+  getUserImageURL(user: User): SafeUrl | undefined {
+    if (user.userImageFile) {
+      const base64String = user.userImageFile as string;
+      const byteArray = Uint8Array.from(atob(base64String), c => c.charCodeAt(0));
+      const blob = new Blob([byteArray], { type: 'image/png' });
+
+      let objectURL = URL.createObjectURL(blob);
+      return this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    }
+    return undefined;
+  }
+
+  getCourseImageURL(course: Course): SafeUrl | undefined {
+    if (course.file) {
+      const base64String = course.file as string;
+      const byteArray = Uint8Array.from(atob(base64String), c => c.charCodeAt(0));
+      const blob = new Blob([byteArray], { type: 'image/png' });
+
+      let objectURL = URL.createObjectURL(blob);
+      return this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    }
+    return undefined;
   }
 
   getUserIndex(firstAllUsers, username: string): number {

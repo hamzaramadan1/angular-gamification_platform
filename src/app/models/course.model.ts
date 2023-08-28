@@ -6,7 +6,7 @@ export class Course {
   courseName: string = '';
   courseDescription: string = '';
   courseLink: string = '';
-  file!: File;
+  file!: File | string;
   imageName!: string;
   imageType!: string;
   user: User | undefined;

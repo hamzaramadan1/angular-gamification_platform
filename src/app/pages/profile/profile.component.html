@@ -6,8 +6,8 @@
         <div class="user-level">
           Lv. {{currentUser.userLevel}}
         </div>
-        <img *ngIf="currentUser.userImageName == null" src="https://i.stack.imgur.com/34AD2.jpg" alt="User profile image">
-        <img *ngIf="currentUser.userImageName !== null" src="assets/user_images/{{currentUser.userImageName}}">
+        <img *ngIf="currentUser.userImageFile == null" src="https://i.stack.imgur.com/34AD2.jpg" alt="User profile image">
+        <img *ngIf="currentUser.userImageFile !== null" [src]="getUserImageURL(currentUser)">
       </div>
       <div class="profile-info" style="text-transform: capitalize">
         <h1>{{currentUser.firstName}} {{currentUser.lastName}}</h1>
@@ -68,7 +68,7 @@
     <h2 class="courses-title">Derniers cours</h2>
     <div class="courses-container">
       <div class="course-container" *ngFor="let item of getLastEightItems().reverse()">
-        <img (click)="goToSelectedCourse(item)" class="course-container-image" src="assets/course_images/{{item.imageName}}" (click)="goToSelectedCourse(item)">
+        <img (click)="goToSelectedCourse(item)" class="course-container-image" [src]="getCourseImageURL(item)" (click)="goToSelectedCourse(item)">
         <div class="course-container-title">
           {{item.courseName}}
         </div>
@@ -83,8 +83,8 @@
           <img class="icon" src="/assets/king.png">
         </div>
         <div class="classement-container-rank-1-image">
-          <img *ngIf="firstThreeUsers[0].userImageName == null" src="https://i.stack.imgur.com/34AD2.jpg">
-          <img *ngIf="firstThreeUsers[0].userImageName !== null" src="assets/user_images/{{firstThreeUsers[0].userImageName}}">
+          <img *ngIf="firstThreeUsers[0].userImageFile == null" src="https://i.stack.imgur.com/34AD2.jpg">
+          <img *ngIf="firstThreeUsers[0].userImageFile !== null" [src]="getUserImageURL(firstThreeUsers[0])">
         </div>
         <p class="classement-container-rank-1-image-name">{{firstThreeUsers[0].firstName}} {{firstThreeUsers[0].lastName}}</p>
         <div class="classement-container-rank-1-level"> Lv. {{firstThreeUsers[0].userLevel}}</div>
@@ -95,8 +95,8 @@
           <img style="height: 40px" src="/assets/two.png">
         </div>
         <div class="classement-container-rank-2-image">
-          <img *ngIf="firstThreeUsers[1].userImageName == null" src="https://i.stack.imgur.com/34AD2.jpg">
-          <img *ngIf="firstThreeUsers[1].userImageName !== null" src="assets/user_images/{{firstThreeUsers[1].userImageName}}">
+          <img *ngIf="firstThreeUsers[1].userImageFile == null" src="https://i.stack.imgur.com/34AD2.jpg">
+          <img *ngIf="firstThreeUsers[1].userImageFile !== null" [src]="getUserImageURL(firstThreeUsers[1])">
         </div>
         <p class="classement-container-rank-2-image-name">{{firstThreeUsers[1].firstName}} {{firstThreeUsers[1].lastName}}</p>
         <div class="classement-container-rank-2-level"> Lv. {{firstThreeUsers[1].userLevel}}</div>
@@ -107,8 +107,8 @@
           <img style="height: 40px" src="/assets/3.png">
         </div>
         <div class="classement-container-rank-3-image">
-          <img *ngIf="firstThreeUsers[2].userImageName == null" src="https://i.stack.imgur.com/34AD2.jpg">
-          <img *ngIf="firstThreeUsers[2].userImageName !== null" src="assets/user_images/{{firstThreeUsers[2].userImageName}}">
+          <img *ngIf="firstThreeUsers[2].userImageFile == null" src="https://i.stack.imgur.com/34AD2.jpg">
+          <img *ngIf="firstThreeUsers[2].userImageFile !== null" [src]="getUserImageURL(firstThreeUsers[2])">
         </div>
         <p class="classement-container-rank-3-image-name">{{firstThreeUsers[2].firstName}} {{firstThreeUsers[2].lastName}}</p>
         <div class="classement-container-rank-3-level"> Lv. {{firstThreeUsers[2].userLevel}}</div>

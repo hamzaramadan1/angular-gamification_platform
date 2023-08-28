@@ -10,7 +10,7 @@
     </div>
     <div class="courses-container">
       <div class="course-container" *ngFor="let item of sortedCourseList;">
-        <img class="course-image" style="height: 7vh;" src="assets/course_images/{{item.imageName}}">
+        <img class="course-image" style="height: 7vh;" [src]="getCourseImageURL(item)">
         <div class="cours-infos">
           <div class="course-title">
             <h5 style="font-weight: 700; text-transform: capitalize">{{item.courseName}}</h5>
@@ -26,13 +26,13 @@
   </div>
   <div class="right-container" *ngIf="selectedCourse">
     <div class="selected-course-image-container">
-      <img  style="max-height: 25vh" class="selected-course-image" src="assets/course_images/{{selectedCourse.imageName}}">
+      <img  style="max-height: 25vh" class="selected-course-image" [src]="getCourseImageURL(selectedCourse)">
     </div>
     <h5 style="text-transform: capitalize; font-weight: 700">{{selectedCourse.courseName}}</h5>
     <p>{{selectedCourse.courseDescription}}</p>
     <div class="selected-course-maker">
-      <img *ngIf="selectedCourse.user?.userImageName == null" style="margin-right: 5vh; border-radius: 50%; height: 10vh" src="https://i.stack.imgur.com/34AD2.jpg">
-      <img *ngIf="selectedCourse.user?.userImageName !== null" style="margin-right: 5vh; border-radius: 50%; height: 10vh" src="assets/user_images/{{selectedCourse.user?.userImageName}}">
+      <img *ngIf="selectedCourse.user?.userImageFile== null" style="margin-right: 5vh; border-radius: 50%; height: 10vh; width: 10vh;" src="https://i.stack.imgur.com/34AD2.jpg">
+      <img *ngIf="selectedCourse.user?.userImageFile!== null" style="margin-right: 5vh; border-radius: 50%; height: 10vh; width: 10vh;" [src]="getUserImageURL(selectedCourse.user)">
       <div class="selected-course-maker-infos">
         <p style="text-transform: capitalize">{{selectedCourse.user?.firstName}} {{selectedCourse.user?.lastName}}</p>
         <p style="color: #777777; font-size: small">Professeur</p>

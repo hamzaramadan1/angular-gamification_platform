@@ -14,6 +14,8 @@ import { PuzzleGameService } from 'src/app/services/puzzleGame.service';
 import { UserMinigameScoreService } from 'src/app/services/userminigamescore.service';
 import { UserMemoryGameScoreService } from 'src/app/services/userMemoryGameScore.service';
 import { UserPuzzleGameScoreService } from 'src/app/services/userPuzzleGameScore.service';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 
 
@@ -69,7 +71,9 @@ export class AdminComponent implements OnInit {
               private puzzleGameService: PuzzleGameService,
               private userMinigameScoreService: UserMinigameScoreService,
               private userMemoryGameScoreService: UserMemoryGameScoreService,
-              private userPuzzleGameScoreService: UserPuzzleGameScoreService) {
+              private userPuzzleGameScoreService: UserPuzzleGameScoreService,
+              private sanitizer: DomSanitizer
+              ) {
   }
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(data => {
@@ -291,12 +295,13 @@ export class AdminComponent implements OnInit {
   }
 
   saveCourse() {
-    this.courseService.saveCourse(this.course.courseName, this.course.courseDescription, this.course.courseLink, this.course.file).subscribe((data: Course) => {
+    this.courseService.saveCourse(this.course.courseName, this.course.courseDescription, this.course.courseLink, this.course.file as File).subscribe((data: Course) => {
       Swal.fire(
         'Succès !',
         'Cours sauvegardé pour l\'admin : ' + this.currentUser.username + '.',
         'success'
       );
+
       window.location.reload();
       this.closeCourseModal();    }, error => {
       Swal.fire(

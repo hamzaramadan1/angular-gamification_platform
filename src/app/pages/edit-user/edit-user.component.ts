@@ -5,7 +5,7 @@ import {AuthenticationService} from "../../services/authentication.service";
 import Swal from 'sweetalert2';
 import {Router} from "@angular/router";
 import {Course} from "../../models/course.model";
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-user',
@@ -21,8 +21,8 @@ export class EditUserComponent implements OnInit {
   firstNamePattern = "^[a-zA-Z'’]{2,30}$"
   lastNamePattern = "^[a-zA-Z'’]{2,30}$";
   emailPattern = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
-  decodedImage: any = '';
   imageFile: File;
+  decodedImage: any = '';
 
   constructor(private userService: UserService,
               private authenticationService: AuthenticationService,
@@ -34,19 +34,8 @@ export class EditUserComponent implements OnInit {
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(data => {
       this.currentUser = data;
-      
-      // Check if userImageFile is not null before processing it
-      if (this.currentUser.userImageFile) {
-        const base64String = this.currentUser.userImageFile as string;
-        const byteArray = Uint8Array.from(atob(base64String), c => c.charCodeAt(0));
-        const blob = new Blob([byteArray], { type: 'image/png' });
-
-        let objectURL = URL.createObjectURL(blob);
-        this.decodedImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-      }
     });
   }
-  
 
   onFileSelected(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -73,6 +62,7 @@ export class EditUserComponent implements OnInit {
         'Photo de profil changée avec succès.',
         'success'
       );
+
       if (this.currentUser.role === 'USER') {
         this.router.navigate(['/profile']);
       } else if (this.currentUser.role === 'ADMIN' || this.currentUser.role === 'SUPERADMIN') {
@@ -85,6 +75,19 @@ export class EditUserComponent implements OnInit {
         'error'
       );
     })
+  }
+
+  getUserImageURL(user: User): SafeUrl | undefined {
+    if (user.userImageFile) {
+      const base64String = user.userImageFile as string;
+      const byteArray = Uint8Array.from(atob(base64String), c => c.charCodeAt(0));
+      const blob = new Blob([byteArray], { type: 'image/png' });
+
+      let objectURL = URL.createObjectURL(blob);
+      return this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    }
+
+    return undefined;
   }
 
   updateUser() {

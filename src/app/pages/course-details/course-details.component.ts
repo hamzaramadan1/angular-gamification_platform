@@ -10,6 +10,7 @@ import { UserMinigameScoreService } from 'src/app/services/userminigamescore.ser
 import { MemoryGame } from 'src/app/models/memoryGame.model';
 import { PuzzleGame } from 'src/app/models/puzzleGame.model';
 import { UserPuzzleGameScoreService } from 'src/app/services/userPuzzleGameScore.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-course-details',
@@ -32,7 +33,8 @@ export class CourseDetailsComponent implements OnInit {
               private userMinigameScoreService: UserMinigameScoreService,
               private userMemoryGameScoreService: UserMemoryGameScoreService,
               private userPuzzleGameScoreService: UserPuzzleGameScoreService,
-              private router: Router) {
+              private router: Router,
+              private sanitizer: DomSanitizer) {
     this.selectedCourse = Object.assign(new Course(),this.router.getCurrentNavigation()?.extras.state);
   }
 
@@ -64,6 +66,31 @@ export class CourseDetailsComponent implements OnInit {
         });
       });
     });
+  }
+
+  getUserImageURL(user: User): SafeUrl | undefined {
+    if (user.userImageFile) {
+      const base64String = user.userImageFile as string;
+      const byteArray = Uint8Array.from(atob(base64String), c => c.charCodeAt(0));
+      const blob = new Blob([byteArray], { type: 'image/png' });
+
+      let objectURL = URL.createObjectURL(blob);
+      return this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    }
+
+    return undefined;
+  }
+
+  getCourseImageURL(course: Course): SafeUrl | undefined {
+    if (course.file) {
+      const base64String = course.file as string;
+      const byteArray = Uint8Array.from(atob(base64String), c => c.charCodeAt(0));
+      const blob = new Blob([byteArray], { type: 'image/png' });
+
+      let objectURL = URL.createObjectURL(blob);
+      return this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    }
+    return undefined;
   }
 
   gameDetails(minigame: Minigame) {

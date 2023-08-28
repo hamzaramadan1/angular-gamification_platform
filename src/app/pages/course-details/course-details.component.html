@@ -1,13 +1,13 @@
 <app-navbar></app-navbar>
 <div class="right-container">
   <div class="selected-course-image-container">
-    <img  style="max-height: 40vh" class="selected-course-image" src="assets/course_images/{{selectedCourse.imageName}}">
+    <img  style="max-height: 40vh" class="selected-course-image" [src]="getCourseImageURL(selectedCourse)">
   </div>
   <h5 style="text-transform: capitalize; font-weight: 700">{{selectedCourse.courseName}}</h5>
   <p>{{selectedCourse.courseDescription}}</p>
   <div class="selected-course-maker">
-    <img *ngIf="selectedCourse.user?.userImageName == null" style="margin-right: 5vh; border-radius: 50%; height: 10vh" src="https://i.stack.imgur.com/34AD2.jpg">
-    <img *ngIf="selectedCourse.user?.userImageName !== null" style="margin-right: 5vh; border-radius: 50%; height: 10vh" src="assets/user_images/{{selectedCourse.user?.userImageName}}">
+    <img *ngIf="selectedCourse.user?.userImageFile == null" style="margin-right: 5vh; border-radius: 50%; height: 10vh; width: 10vh;" src="https://i.stack.imgur.com/34AD2.jpg">
+    <img *ngIf="selectedCourse.user?.userImageFile !== null" style="margin-right: 5vh; border-radius: 50%; height: 10vh; width: 10vh;" [src]="getUserImageURL(selectedCourse.user)">
     <div class="selected-course-maker-infos">
       <p style="text-transform: capitalize">{{selectedCourse.user?.firstName}} {{selectedCourse.user?.lastName}}</p>
       <p style="color: #777777; font-size: small">Professeur</p>
